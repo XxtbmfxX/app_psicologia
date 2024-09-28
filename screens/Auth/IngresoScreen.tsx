@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const ingresar = () => {
+const Ingreso = () => {
   return (
     <View>
-      <Text>ingresar</Text>
+      <Text>Ingreso</Text>
     </View>
   )
 }
 
-export default ingresar
+export default Ingreso

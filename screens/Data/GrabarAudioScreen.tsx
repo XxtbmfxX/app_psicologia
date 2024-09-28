@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const registrarse = () => {
+const GrabarAudioScreen = () => {
   return (
     <View>
-      <Text>registrarse</Text>
+      <Text>GrabarAudioScreen</Text>
     </View>
   )
 }
 
-export default registrarse
+export default GrabarAudioScreen
