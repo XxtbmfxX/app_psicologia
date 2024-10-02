@@ -1,16 +1,19 @@
-import { Text, View } from 'react-native';
-
-import { useSession } from '@/context/AuthContext';
+import { Text, View } from "react-native";
+import { useSession } from "@/context/AuthContext";
+import { router } from "expo-router";
 
 export default function Index() {
   const { signOut } = useSession();
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View className=" flex align-middle justify-center h-full bg-blue-400 ">
       <Text
+        className="text-white font-bold text-xl "
         onPress={() => {
-          // The `app/(app)/_layout.tsx` will redirect to the sign-in screen.
-          signOut();
-        }}>
+          console.log("oliwis")
+          router.push("/(auth)")
+        }
+        }
+      >
         Sign Out
       </Text>
     </View>
