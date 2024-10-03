@@ -2,8 +2,9 @@ import { Redirect, Stack } from "expo-router";
 
 const AuthLayout = () => {
   return (
-    <>
-      <Stack>
+      <Stack screenOptions={{
+        headerShown: false,
+      }} >
         <Stack.Screen
           name="index"
           options={{
@@ -17,7 +18,6 @@ const AuthLayout = () => {
           }}
         />
       </Stack>
-    </>
   );
 };
 

@@ -13,6 +13,13 @@ export class index extends Component {
         >
           Sign In 
         </Text>
+        <Text
+          onPress={() => {
+            router.push("/recuperarContrasenia")
+          }}
+        >
+          Recuperar Contraseña
+        </Text>
       </View>
     );
   }

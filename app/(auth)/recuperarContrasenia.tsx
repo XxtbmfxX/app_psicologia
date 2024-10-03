@@ -6,7 +6,7 @@ const recuperarContrasenia = () => {
   return (
     <View>
       <Text>recuperarContrasenia</Text>
-      <Link href={"/ingresar"} >Ingresar</Link>
+      <Link href={"/(home)"} >Ingresar</Link>
     </View>
   );
 };

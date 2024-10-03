@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 import { Redirect, router, Stack, Tabs } from "expo-router";
 import { useSession } from "@/context/AuthContext";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 export default function HomeLayout() {
   // const { session, isLoading } = useSession();
   // if (isLoading) {
@@ -13,7 +13,7 @@ export default function HomeLayout() {
   // }
 
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "blue", headerShown: false }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: "#125488", headerShown: false }}>
       <Tabs.Screen
         name="index"
         options={{
@@ -28,7 +28,7 @@ export default function HomeLayout() {
         options={{
           title: "Citas",
           tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="cog" color={color} />
+            <FontAwesome size={28} name="book" color={color} />
           ),
         }}
       />
@@ -41,6 +41,55 @@ export default function HomeLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="aniadir"
+        options={{
+          title: "Añadir",
+          tabBarIcon: ({ color }) => (
+            <Ionicons name="person-add-sharp" size={24} color={color} />
+          ),
+        }}
+      />
+       <Tabs.Screen
+        name="profile"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="paciente/[id]"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="paciente/grabaciones"
+        options={{
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="paciente/grabarAudio"
+        options={{
+          href: null,
+        }}
+      />
+
+      <Tabs.Screen
+        name="paciente/modificarPaciente"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="paciente/transcipciones"
+        options={{
+          href: null,
+        }}
+      />
+
+
     </Tabs>
   );
 }

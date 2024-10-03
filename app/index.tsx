@@ -7,7 +7,7 @@ export default function Index() {
   return (
     <View className="flex-1 items-center justify-center bg-white">
       <StatusBar barStyle={"dark-content"} />
-      <Text className={"text-xl my-10 focus-within:text-blue-500 "}>Biemvenidos 🧐</Text>
+      <Text className={"text-xl my-10 focus-within:text-blue-500 "}>Bienvenidos 🧐</Text>
       <Link className="text-xl hover:text-blue-500 " href={"/(auth)"}>
         Iniciar sesión{" "}
       </Link>

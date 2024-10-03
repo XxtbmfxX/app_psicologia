@@ -3,7 +3,7 @@ import React from 'react'
 
 const InputDatos = () => {
   return (
-    <View>
+    <View className="bg-blue-200" >
       <Text>InputDatos</Text>
     </View>
   )
