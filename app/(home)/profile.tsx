@@ -1,29 +1,11 @@
-import { View, Text } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { router } from "expo-router";
+import PerfilUsuario from "@/components/mostrar/PerfilUsuario";
 
 const profile = () => {
   return (
-    <SafeAreaView>
-      <Text
-        className=" font-bold text-xl "
-        onPress={() => {
-          console.log("oliwis");
-          router.push("/(auth)");
-        }}
-      >
-        Sign Out
-      </Text>
-      <Text
-        className=" font-bold text-xl "
-        onPress={() => {
-          console.log("oliwis");
-          router.push("/(home)");
-        }}
-      >
-        Volver
-      </Text>
+    <SafeAreaView className="flex-1 p-5">
+      <PerfilUsuario />
     </SafeAreaView>
   );
 };

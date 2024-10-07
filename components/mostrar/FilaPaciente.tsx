@@ -6,15 +6,15 @@ type Props = {};
 
 const FilaPaciente = (props: Props) => {
   return (
-    <View className="flex flex-row justify-around items-center my-2 h-20 bg-green-50 rounded-md ">
+    <View className="flex flex-row items-center my-2 h-20 bg-green-300 rounded-md ">
       <Link
-        className="block  w-full text-center"
+        className="flex flex-row w-full"
         href={{
           pathname: "/(home)/paciente/[id]",
-          params: { id: "1" },
+          params: { id: "2" },
         }}
       >
-        <Text className="text-xl">Nombre: Pedro </Text>
+        <Text className="text-xl">Pedro </Text>
         <Text className="text-xl"> | </Text>
         <Text className="text-xl">Área: NPM</Text>
       </Link>

@@ -1,13 +1,12 @@
-import { View, Text } from "react-native";
 import React from "react";
-import { Link } from "expo-router";
+import { SafeAreaView } from "react-native-safe-area-context";
+import FormRecuperarContrasenia from "@/components/Formulario/FormRecuperarContrasenia";
 
 const recuperarContrasenia = () => {
   return (
-    <View>
-      <Text>recuperarContrasenia</Text>
-      <Link href={"/(home)"} >Ingresar</Link>
-    </View>
+    <SafeAreaView className="flex-1 justify-center bg-white p-4">
+      <FormRecuperarContrasenia />
+    </SafeAreaView>
   );
 };
 

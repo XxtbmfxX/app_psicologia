@@ -8,7 +8,7 @@ const InputBusqueda = (props: Props) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <View className="flex-row items-center bg-gray-200 rounded-lg px-4 py-2 w-full">
+    <View className="flex-row items-center bg-gray-200 rounded-2xl px-4 py-2 w-full">
       <Ionicons
         name="search"
         size={20}
