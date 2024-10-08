@@ -14,11 +14,11 @@ const PerfilUsuario = () => {
   };
 
   return (
-    <View className=" ">
+    <View className="">
       <View className="flex flex-row items-center justify-between ">
         <Feather onPress={handleGoHome} name="arrow-left-circle" size={58} color="black" />
         <Text className="text-2xl" >Hola Usuario</Text>
-        <Ionicons onPress={handleGoHome} name="exit" size={58} color="black" />
+        <Ionicons onPress={handleLogOut} name="exit" size={58} color="black" />
       </View>
       <View className="flex items-center my-5 ">
         <Text className="text-2xl font-bold text-center ">

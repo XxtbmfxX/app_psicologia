@@ -8,7 +8,7 @@ const FilaPaciente = (props: Props) => {
   return (
     <View className="flex flex-row items-center my-2 h-20 bg-green-300 rounded-md ">
       <Link
-        className="flex flex-row w-full"
+        className="flex flex-row w-full pl-5"
         href={{
           pathname: "/(home)/paciente/[id]",
           params: { id: "2" },
