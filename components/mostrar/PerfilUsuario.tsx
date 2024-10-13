@@ -1,44 +1,15 @@
-import { View, Text } from "react-native";
-import React from "react";
-import { router } from "expo-router";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Feather from "@expo/vector-icons/Feather";
-const PerfilUsuario = () => {
-  const handleGoHome = () => {
-    console.log("Vuelta al inicio");
-    router.push("/(home)");
-  };
-  const handleLogOut = () => {
-    console.log("Vuelta al inicio");
-    router.push("/(auth)");
-  };
+import { useSession } from '@/context/AuthContext';
+import { View, Text, Button } from 'react-native';
+
+export default function PerfilUsuario() {
+  const { signOut, session } = useSession();
+
+  console.log(session)
 
   return (
-    <View className="">
-      <View className="flex flex-row items-center justify-between ">
-        <Feather onPress={handleGoHome} name="arrow-left-circle" size={58} color="black" />
-        <Text className="text-2xl" >Hola Usuario</Text>
-        <Ionicons onPress={handleLogOut} name="exit" size={58} color="black" />
-      </View>
-      <View className="flex items-center my-5 ">
-        <Text className="text-2xl font-bold text-center ">
-          Más datos de usuario
-        </Text>
-        <Text className="text-2xl font-bold text-center ">
-          Más datos de usuario
-        </Text>
-        <Text className="text-2xl font-bold text-center ">
-          Más datos de usuario
-        </Text>
-        <Text className="text-2xl font-bold text-center ">
-          Más datos de usuario
-        </Text>
-        <Text className="text-2xl font-bold text-center ">
-          Más datos de usuario
-        </Text>
-      </View>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>¡Bienvenido, {session?.email}!</Text>
+      <Button title="Cerrar sesión" onPress={signOut} />
     </View>
   );
-};
-
-export default PerfilUsuario;
+}

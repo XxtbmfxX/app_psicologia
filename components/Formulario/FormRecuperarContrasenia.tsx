@@ -8,7 +8,7 @@ const FormRecuperarContrasenia = (props: Props) => {
   const [correo, setCorreo] = useState("");
 
   const handleRecuperarContraseña = () => {
-    router.navigate("/(auth)");
+    router.navigate("/");
   };
 
   return (
@@ -21,7 +21,7 @@ const FormRecuperarContrasenia = (props: Props) => {
         className="border border-gray-300 rounded p-2 mb-4 w-full"
       />
       <Button title="Iniciar Sesión" onPress={handleRecuperarContraseña} />
-      <Link className="mt-4 text-blue-500" href={"/(auth)"}>
+      <Link className="mt-4 text-blue-500" href={"/"}>
         Ingresar
       </Link>
     </View>

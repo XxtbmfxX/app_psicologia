@@ -1,19 +1,28 @@
 import { Text } from "react-native";
-import { Redirect, router, Stack, Tabs } from "expo-router";
+import { Redirect, Stack, Tabs } from "expo-router";
 import { useSession } from "@/context/AuthContext";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-export default function HomeLayout() {
-  // const { session, isLoading } = useSession();
-  // if (isLoading) {
-  //   return <Text>Loading...</Text>;
-  // }
 
-  // if (!session) {
-  //   router.push("/");
-  // }
+export default function HomeLayout() {
+  const { session, isLoading } = useSession();
+
+  // You can keep the splash screen open, or render a loading screen like we do here.
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  // Only require authentication within the (app) group's layout as users
+  // need to be able to access the (auth) group and sign in again.
+  if (!session) {
+    // On web, static rendering will stop here as the user is not authenticated
+    // in the headless Node process that the pages are rendered in.
+    return <Redirect href="/" />;
+  }
 
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "#125488", headerShown: false }}>
+    <Tabs
+      screenOptions={{ tabBarActiveTintColor: "#125488", headerShown: false }}
+    >
       <Tabs.Screen
         name="index"
         options={{
@@ -50,7 +59,7 @@ export default function HomeLayout() {
           ),
         }}
       />
-       <Tabs.Screen
+      <Tabs.Screen
         name="profile"
         options={{
           href: null,
@@ -88,8 +97,6 @@ export default function HomeLayout() {
           href: null,
         }}
       />
-
-
     </Tabs>
   );
 }

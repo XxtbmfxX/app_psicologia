@@ -1,1 +1,0 @@
-console.log("traer los datos uwu")

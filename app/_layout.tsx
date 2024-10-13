@@ -1,29 +1,20 @@
-import { SessionProvider } from "@/context/AuthContext";
-import { Stack } from "expo-router";
+import { SessionProvider, useSession } from "@/context/AuthContext";
+import { Slot, useRouter } from "expo-router";
+import { useEffect } from "react";
 
 export default function RootLayout() {
+  const { session, isLoading } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!isLoading && !session) {
+      router.replace("/"); // Redirigir al inicio de sesión si no hay sesión activa
+    }
+  }, [isLoading, session]);
+
   return (
     <SessionProvider>
-      <Stack>
-        <Stack.Screen
-          name="(home)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="(auth)"
-          options={{
-            headerShown: false,
-          }}
-        />
-        <Stack.Screen
-          name="index"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
+      <Slot />
     </SessionProvider>
   );
 }

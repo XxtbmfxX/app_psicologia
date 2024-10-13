@@ -1,46 +1,52 @@
-import { useContext, createContext, type PropsWithChildren } from 'react';
-import { useStorageState } from '@/hooks/useStorageState/useStorageState';
+import {
+  signInWithEmailAndPassword,
+  signOut as firebaseSignOut,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
+import { auth } from "@/firebase"; // Usa la nueva configuración de auth
+import { createContext, useContext, useEffect, PropsWithChildren } from "react";
+import { useStorageState } from "@/useStorageState";
 
-const AuthContext = createContext<{
-  signIn: () => void;
-  signOut: () => void;
-  session?: string | null;
-  isLoading: boolean;
-}>({
-  signIn: () => null,
-  signOut: () => null,
-  session: null,
+const AuthContext = createContext({
+  signIn: async (email: string, password: string) => {},
+  signOut: () => {},
+  session: null as User | null,
   isLoading: false,
 });
 
-// This hook can be used to access the user info.
 export function useSession() {
-  const value = useContext(AuthContext);
-  if (process.env.NODE_ENV !== 'production') {
-    if (!value) {
-      throw new Error('useSession must be wrapped in a <SessionProvider />');
-    }
-  }
-
-  return value;
+  return useContext(AuthContext);
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState('session');
+  const [[isLoading, session], setSession] = useStorageState<User | null>(
+    "session"
+  );
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setSession(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const signIn = async (email: string, password: string) => {
+    try {
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+      setSession(user);
+    } catch (error) {
+      console.error("Error en inicio de sesión:", error);
+    }
+  };
+
+  const signOut = () => {
+    firebaseSignOut(auth);
+    setSession(null);
+  };
 
   return (
-    <AuthContext.Provider
-      value={{
-        signIn: () => {
-          // Perform sign-in logic here
-          setSession('xxx');
-        },
-        signOut: () => {
-          setSession(null);
-        },
-        session,
-        isLoading,
-      }}>
+    <AuthContext.Provider value={{ signIn, signOut, session, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
