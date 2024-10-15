@@ -1,17 +1,21 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import FilaPaciente from './FilaPaciente'
+// PatientsList.tsx
+import React from 'react';
+import { FlatList, View } from 'react-native';
+import { usePatients } from '../context/PatientsContext';
+import PatientRow from './PatientRow';
 
-const ListaPacientes = () => {
+const PatientsList = () => {
+  const { patients } = usePatients();
+
   return (
-    <View className="bg-purple-500 p-5 " >
-      <FilaPaciente/>
-      <FilaPaciente/>
-      <FilaPaciente/>
-      <FilaPaciente/>
-      <FilaPaciente/>
-    </View>
-  )
-}
+    <FlatList
+      data={patients}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => (
+        <PatientRow id={item.id} nombre={item.nombre} />
+      )}
+    />
+  );
+};
 
-export default ListaPacientes
+export default PatientsList;

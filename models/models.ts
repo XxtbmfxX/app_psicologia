@@ -4,12 +4,22 @@ export interface User {
   email: string;
 }
 
-export interface Paciente {
+// Opcional
+// export interface Paciente {
+//   id: string;
+//   firstName: string;
+//   lastName: string;
+//   rut: string;
+//   dv: string;
+//   phone: string;
+//   nextControl: Date;
+// }
+
+type Patient = {
   id: string;
-  firstName: string;
-  lastName: string;
+  nombre: string;
+  apellido: string;
   rut: string;
-  dv: string;
-  phone: string;
-  nextControl: Date;
-}
+  telefono: string;
+  fechaControl: Date;
+};
