@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { TextInput, Button, View, Text } from 'react-native';
-import { usePacientes } from '@/context/PatientContext';
+import { usePacientes } from '@/context/PacienteContext';
 
 type FormData = {
   nombre: string;

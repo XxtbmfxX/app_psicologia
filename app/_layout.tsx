@@ -1,4 +1,5 @@
 import { SessionProvider, useSession } from "@/context/AuthContext";
+import { PacientesProvider } from "@/context/PacienteContext";
 import { Slot, useRouter } from "expo-router";
 import { useEffect } from "react";
 
@@ -14,7 +15,9 @@ export default function RootLayout() {
 
   return (
     <SessionProvider>
-      <Slot />
+      <PacientesProvider>
+        <Slot />
+      </PacientesProvider>
     </SessionProvider>
   );
 }

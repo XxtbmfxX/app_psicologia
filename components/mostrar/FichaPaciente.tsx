@@ -5,12 +5,13 @@ import { router } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { Patient } from "@/types/types";
 
 type Props = {
-  id: string | string[];
+  patient: Patient;
 };
 
-const FichaPaciente = ({ id }: Props) => {
+const FichaPaciente = ({ patient }: Props) => {
   const grabarAudio = () => {
     console.log("audio grabado");
     router.push("/(home)/paciente/grabarAudio");
@@ -62,36 +63,35 @@ const FichaPaciente = ({ id }: Props) => {
       <View className="flex items-center h-full rounded-3xl bg-blue-400">
         {/* Datos Paciente */}
 
-        <Text>Nombre</Text>
-        <Text>Juan Perez</Text>
+        <Text>Nombre: {patient?.nombre}</Text>
+        <Text>Apellido: {patient?.apellido}</Text>
+        <Text>RUT: {patient?.rut}</Text>
+        <Text>Teléfono: {patient?.telefono}</Text>
+        <Text>Fecha de Control: {patient?.fechaControl?.toString()}</Text>
 
-        <Text>Rut</Text>
-        <Text>12.123.123-1</Text>
+        {/* Botones de redirección  */}
 
-        <Text>UPC</Text>
+        <Pressable
+          onPress={grabarAudio}
+          className="bg-purple-500 p-4 rounded-lg"
+        >
+          <Text className="text-white text-center">Grabar Audio</Text>
+        </Pressable>
 
-        <Text>Número de Ficha</Text>
-        <Text>{id}</Text>
+        <Pressable
+          onPress={grabarAudio}
+          className="bg-purple-500 p-4 rounded-lg"
+        >
+          <Text className="text-white text-center">Grabar Audio</Text>
+        </Pressable>
 
-        <Text>Contacto Telefónico</Text>
-        <Text>123456789</Text>
-
-      {/* Botones de redirección  */}
-
-      <Pressable onPress={grabarAudio} className="bg-purple-500 p-4 rounded-lg">
-        <Text className="text-white text-center">Grabar Audio</Text>
-      </Pressable>
-
-      <Pressable onPress={grabarAudio} className="bg-purple-500 p-4 rounded-lg">
-        <Text className="text-white text-center">Grabar Audio</Text>
-      </Pressable>
-
-      <Pressable onPress={grabarAudio} className="bg-purple-500 p-4 rounded-lg">
-        <Text className="text-white text-center">Grabar Audio</Text>
-      </Pressable>
-
+        <Pressable
+          onPress={grabarAudio}
+          className="bg-purple-500 p-4 rounded-lg"
+        >
+          <Text className="text-white text-center">Grabar Audio</Text>
+        </Pressable>
       </View>
-
     </>
   );
 };

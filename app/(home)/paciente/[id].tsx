@@ -1,21 +1,22 @@
-import { View, Text, Pressable, Button, StatusBar } from "react-native";
+// [id].tsx
 import React from "react";
+import { View, Text } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { usePacientes } from "@/context/PacienteContext";
 import FichaPaciente from "@/components/mostrar/FichaPaciente";
 
-type Props = {};
-
-const Paciente = (props: Props) => {
+const PatientDetails = () => {
+  const {  pacientes } = usePacientes();
   const { id } = useLocalSearchParams();
+  const patient = pacientes.find((p) => p.id === id);
 
+  if (!patient) return <Text>Paciente no encontrado</Text>;
 
   return (
-    <SafeAreaView className="bg-green-300 ">
-     <FichaPaciente id={id} />
-     <Button title="ola" />
-    </SafeAreaView>
+    <View className="p-4">
+      <FichaPaciente patient={patient} />
+    </View>
   );
 };
 
-export default Paciente;
+export default PatientDetails;
