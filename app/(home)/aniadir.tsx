@@ -1,13 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import FormIngresoPacientes from '@/components/Formulario/FormIngresoPacientes'
 
 type Props = {}
 
 const aniadir = (props: Props) => {
   return (
-    <SafeAreaView>
-      <Text>Añadir</Text>
+    <SafeAreaView className='flex-1 items-center p-5 bg-blue-400 ' >
+      <FormIngresoPacientes/>
     </SafeAreaView>
   )
 }

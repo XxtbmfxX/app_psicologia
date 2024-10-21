@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '@/firebaseConfig';
 
 type Paciente = {
   id: string;
