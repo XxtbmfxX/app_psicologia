@@ -1,13 +1,10 @@
 import { useEffect, useCallback, useReducer } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { Platform } from 'react-native';
-import { encryptData, decryptData } from '@/encryption';
 
 type UseStateHook<T> = [[boolean, T | null], (value: T | null) => void];
 
-function useAsyncState<T>(
-  initialValue: [boolean, T | null] = [true, null]
-): UseStateHook<T> {
+function useAsyncState<T>(initialValue: [boolean, T | null] = [true, null]): UseStateHook<T> {
   return useReducer(
     (state: [boolean, T | null], action: T | null = null): [boolean, T | null] => [false, action],
     initialValue
@@ -15,23 +12,21 @@ function useAsyncState<T>(
 }
 
 export async function setStorageItemAsync(key: string, value: string | null) {
-  const encryptedValue = value ? encryptData(value) : null;
-
   if (Platform.OS === 'web') {
     try {
-      if (encryptedValue === null) {
+      if (value === null) {
         localStorage.removeItem(key);
       } else {
-        localStorage.setItem(key, encryptedValue);
+        localStorage.setItem(key, value);
       }
     } catch (e) {
-      console.error('Local storage no disponible:', e);
+      console.error('Local storage is unavailable:', e);
     }
   } else {
-    if (encryptedValue == null) {
-      await AsyncStorage.removeItem(key);
+    if (value == null) {
+      await SecureStore.deleteItemAsync(key);
     } else {
-      await AsyncStorage.setItem(key, encryptedValue);
+      await SecureStore.setItemAsync(key, value);
     }
   }
 }
@@ -39,25 +34,23 @@ export async function setStorageItemAsync(key: string, value: string | null) {
 export function useStorageState(key: string): UseStateHook<string> {
   const [state, setState] = useAsyncState<string>();
 
-  // Leer datos almacenados al iniciar la app
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const storedValue = Platform.OS === 'web'
-          ? localStorage.getItem(key)
-          : await AsyncStorage.getItem(key);
-
-        const decryptedValue = storedValue ? decryptData(storedValue) : null;
-        setState(decryptedValue);
-      } catch (e) {
-        console.error('Error al leer el almacenamiento:', e);
+    const loadItem = async () => {
+      if (Platform.OS === 'web') {
+        try {
+          const value = localStorage.getItem(key);
+          setState(value);
+        } catch (e) {
+          console.error('Local storage is unavailable:', e);
+        }
+      } else {
+        const value = await SecureStore.getItemAsync(key);
+        setState(value);
       }
     };
-
-    fetchData();
+    loadItem();
   }, [key]);
 
-  // Guardar los datos cada vez que cambian
   const setValue = useCallback(
     (value: string | null) => {
       setState(value);

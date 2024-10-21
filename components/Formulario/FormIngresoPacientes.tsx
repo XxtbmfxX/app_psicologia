@@ -1,7 +1,15 @@
-import React from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import { TextInput, Button, View, Text } from 'react-native';
-import { usePacientes } from '@/context/PacienteContext';
+import React, { useState } from "react";
+import { useForm, Controller } from "react-hook-form";
+import {
+  TextInput,
+  Button,
+  View,
+  Text,
+  Platform,
+  Pressable,
+} from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { usePacientes } from "@/context/PacienteContext";
 
 type FormData = {
   nombre: string;
@@ -14,10 +22,19 @@ type FormData = {
 const FormIngresoPacientes = () => {
   const { control, handleSubmit, reset } = useForm<FormData>();
   const { agregarPaciente } = usePacientes();
+  const [showPicker, setShowPicker] = useState(false); // Controla la visibilidad del picker
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
+    new Date()
+  );
 
   const onSubmit = async (data: FormData) => {
-    await agregarPaciente(data);
+    await agregarPaciente({ ...data, fechaControl: selectedDate! });
     reset(); // Limpia el formulario
+  };
+
+  const onChangeDate = (event: any, date?: Date) => {
+    setShowPicker(false); // Cierra el picker tras seleccionar
+    if (date) setSelectedDate(date); // Actualiza la fecha seleccionada
   };
 
   return (
@@ -71,6 +88,28 @@ const FormIngresoPacientes = () => {
           />
         )}
       />
+
+      {/* Picker para Fecha y Hora */}
+      <Pressable
+        onPress={() => setShowPicker(true)}
+        className="border p-2 mb-2"
+      >
+        <Text>
+          {selectedDate
+            ? selectedDate.toLocaleString()
+            : "Selecciona fecha y hora"}
+        </Text>
+      </Pressable>
+
+      {showPicker && (
+        <DateTimePicker
+          value={selectedDate || new Date()}
+          mode="datetime"
+          display={Platform.OS === "ios" ? "inline" : "default"}
+          onChange={onChangeDate}
+        />
+      )}
+
       <Button title="Agregar Paciente" onPress={handleSubmit(onSubmit)} />
     </View>
   );

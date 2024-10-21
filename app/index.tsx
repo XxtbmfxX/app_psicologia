@@ -1,54 +1,45 @@
-import { useState } from "react";
-import { Button, TextInput, View, Text, Alert, StyleSheet } from "react-native";
-import { useRouter } from "expo-router";
+import React, { useState } from "react";
+import { Button, TextInput, View, StyleSheet } from "react-native";
 import { useSession } from "@/context/AuthContext";
+import { router } from "expo-router";
 
-export default function IniciarSesion() {
+const Index: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signIn } = useSession();
-  const router = useRouter();
 
-  const handleSignIn = async () => {
+  const handlesignIn = async () => {
     try {
       await signIn(email, password);
-      router.replace("/(home)"); // Redirigir al Home después del login exitoso
+      router.replace('/(home)')
     } catch (error) {
-      Alert.alert(
-        "Error",
-        "No se pudo iniciar sesión. Revisa tus credenciales."
-      );
+      console.error("Error al iniciar sesión:", error);
     }
   };
 
   return (
     <View style={styles.container}>
       <TextInput
-        style={styles.input}
-        placeholder="Correo"
+        placeholder="Email"
         value={email}
         onChangeText={setEmail}
+        style={styles.input}
       />
       <TextInput
-        style={styles.input}
         placeholder="Contraseña"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
+        style={styles.input}
       />
-      <Button title="Iniciar Sesión" onPress={handleSignIn} />
-      <Text
-        style={styles.link}
-        onPress={() => router.push("/recuperarContrasenia")}
-      >
-        ¿Olvidaste tu contraseña?
-      </Text>
+      <Button title="Iniciar sesión" onPress={handlesignIn} />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", padding: 16 },
-  input: { borderWidth: 1, padding: 8, marginBottom: 16 },
-  link: { marginTop: 8, color: "blue", textAlign: "center" },
+  container: { flex: 1, justifyContent: "center", padding: 20 },
+  input: { marginBottom: 10, borderWidth: 1, padding: 8, borderRadius: 5 },
 });
+
+export default Index;

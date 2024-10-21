@@ -1,48 +1,69 @@
 import {
+  useContext,
+  createContext,
+  type PropsWithChildren,
+  useEffect,
+  useState,
+} from "react";
+import {
   signInWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
   User,
 } from "firebase/auth";
-import { auth } from "@/firebase"; // Usa la nueva configuración de auth
-import { createContext, useContext, useEffect, PropsWithChildren } from "react";
-import { useStorageState } from "@/useStorageState";
+import { auth } from "@/firebaseConfig";
 
-const AuthContext = createContext({
-  signIn: async (email: string, password: string) => {},
-  signOut: () => {},
-  session: null as User | null,
+const AuthContext = createContext<{
+  signIn: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+  session?: User | null;
+  isLoading: boolean;
+}>({
+  signIn: async () => {},
+  signOut: async () => {},
+  session: null,
   isLoading: false,
 });
 
 export function useSession() {
-  return useContext(AuthContext);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useSession must be wrapped in a <SessionProvider />");
+  }
+  return context;
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState<User | null>(
-    "session"
-  );
+  const [session, setSession] = useState<User | null>(null);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setSession(user);
+      setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
   const signIn = async (email: string, password: string) => {
+    setLoading(true);
     try {
-      const { user } = await signInWithEmailAndPassword(auth, email, password);
-      setSession(user);
+      await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
-      console.error("Error en inicio de sesión:", error);
+      console.error("Sign-in error:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const signOut = () => {
-    firebaseSignOut(auth);
-    setSession(null);
+  const signOut = async () => {
+    try {
+      await firebaseSignOut(auth);
+      setSession(null);
+    } catch (error) {
+      console.error("Sign-out error:", error);
+    }
   };
 
   return (
