@@ -8,7 +8,6 @@ type Paciente = {
   apellido: string;
   rut: string;
   telefono: string;
-  fechaControl: Date;
 };
 
 type PacientesContextType = {

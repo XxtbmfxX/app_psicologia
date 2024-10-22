@@ -1,116 +1,120 @@
-import React, { useState } from "react";
+import React from "react";
+import { Text, TextInput, Button, View, Alert } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import {
-  TextInput,
-  Button,
-  View,
-  Text,
-  Platform,
-  Pressable,
-} from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { styled } from "nativewind";
 import { usePacientes } from "@/context/PacienteContext";
 
 type FormData = {
   nombre: string;
+  telefono: string;
   apellido: string;
   rut: string;
-  telefono: string;
-  fechaControl: Date;
 };
 
+const StyledButton = styled(Button);
+
 const FormIngresoPacientes = () => {
-  const { control, handleSubmit, reset } = useForm<FormData>();
   const { agregarPaciente } = usePacientes();
-  const [showPicker, setShowPicker] = useState(false); // Controla la visibilidad del picker
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(
-    new Date()
-  );
 
-  const onSubmit = async (data: FormData) => {
-    await agregarPaciente({ ...data, fechaControl: selectedDate! });
-    reset(); // Limpia el formulario
-  };
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<FormData>();
 
-  const onChangeDate = (event: any, date?: Date) => {
-    setShowPicker(false); // Cierra el picker tras seleccionar
-    if (date) setSelectedDate(date); // Actualiza la fecha seleccionada
+  const onSubmit = (data: FormData) => {
+    console.log(data);
+    agregarPaciente(data);
+    reset();
+    Alert.alert("Formulario enviado");
   };
 
   return (
-    <View className="p-4">
+    <View className="flex-1 justify-center items-center p-4">
       <Controller
         name="nombre"
         control={control}
-        render={({ field: { onChange, value } }) => (
+        rules={{ required: true, minLength: 3 }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            className="border p-2 mb-4 w-full"
             placeholder="Nombre"
-            value={value}
+            onBlur={onBlur}
             onChangeText={onChange}
-            className="border p-2 mb-2"
+            value={value}
           />
         )}
       />
-      <Controller
-        name="apellido"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="Apellido"
-            value={value}
-            onChangeText={onChange}
-            className="border p-2 mb-2"
-          />
-        )}
-      />
-      <Controller
-        name="rut"
-        control={control}
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            placeholder="RUT"
-            value={value}
-            onChangeText={onChange}
-            className="border p-2 mb-2"
-          />
-        )}
-      />
+      {errors.nombre && (
+        <Text className="text-red-500 mb-2">Al menos 3 caracteres.</Text>
+      )}
+
       <Controller
         name="telefono"
         control={control}
-        render={({ field: { onChange, value } }) => (
+        rules={{
+          required: "El teléfono es requerido",
+          pattern: {
+            value: /^[0-9]{9,12}$/,
+            message: "El número de teléfono debe tener entre 9 y 12 dígitos",
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
+            className="border p-2 mb-4 w-full"
             placeholder="Teléfono"
-            keyboardType="phone-pad"
-            value={value}
+            onBlur={onBlur}
             onChangeText={onChange}
-            className="border p-2 mb-2"
+            keyboardType="phone-pad"
+            maxLength={12}
+            value={value}
+          />
+        )}
+      />
+      {errors.telefono && (
+        <Text className="text-red-500 mb-2">{errors.telefono.message}</Text>
+      )}
+
+      <Controller
+        name="apellido"
+        control={control}
+        rules={{ minLength: 3 }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            className="border p-2 mb-4 w-full"
+            placeholder="Apellido"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+      {errors.apellido && (
+        <Text className="text-red-500 mb-2">
+          El apellido debe tener al menos 3 caracteres.
+        </Text>
+      )}
+
+      <Controller
+        name="rut"
+        control={control}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            className="border p-2 mb-4 w-full"
+            placeholder="Rut"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
           />
         )}
       />
 
-      {/* Picker para Fecha y Hora */}
-      <Pressable
-        onPress={() => setShowPicker(true)}
-        className="border p-2 mb-2"
-      >
-        <Text>
-          {selectedDate
-            ? selectedDate.toLocaleString()
-            : "Selecciona fecha y hora"}
-        </Text>
-      </Pressable>
-
-      {showPicker && (
-        <DateTimePicker
-          value={selectedDate || new Date()}
-          mode="datetime"
-          display={Platform.OS === "ios" ? "inline" : "default"}
-          onChange={onChangeDate}
-        />
-      )}
-
-      <Button title="Agregar Paciente" onPress={handleSubmit(onSubmit)} />
+      <StyledButton
+        title="Enviar"
+        onPress={handleSubmit(onSubmit)}
+        className="bg-blue-500 text-white w-3/4 p-2"
+      />
     </View>
   );
 };

@@ -7,7 +7,7 @@ type Props = {}
 
 const aniadir = (props: Props) => {
   return (
-    <SafeAreaView className='flex-1 items-center p-5 bg-blue-400 ' >
+    <SafeAreaView className='flex-1 justify-center p-5 bg-blue-400 ' >
       <FormIngresoPacientes/>
     </SafeAreaView>
   )

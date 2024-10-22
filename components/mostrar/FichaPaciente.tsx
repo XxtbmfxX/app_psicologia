@@ -22,7 +22,7 @@ const FichaPaciente = ({ patient }: Props) => {
   };
 
   const agregarCita = () => {
-    console.log("Agregar Cita");
+    router.navigate('/(home)/paciente/agregarCita')
   };
 
   const verGrabaciones = () => {
@@ -90,6 +90,13 @@ const FichaPaciente = ({ patient }: Props) => {
           className="bg-purple-500 p-4 rounded-lg"
         >
           <Text className="text-white text-center">Grabar Audio</Text>
+        </Pressable>
+
+        <Pressable
+          onPress={agregarCita}
+          className="bg-purple-500 p-4 rounded-lg"
+        >
+          <Text className="text-white text-center">Agregar Cita</Text>
         </Pressable>
       </View>
     </>
