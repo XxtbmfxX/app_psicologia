@@ -1,14 +1,23 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import React from "react";
+import FormModificarPaciente from "@/components/Formulario/FormModificarPaciente";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
-type Props = {}
+type Props = {};
+
+type RouteParams = {
+  ModificarPaciente: { pacienteId: string };
+};
 
 const modificarPaciente = (props: Props) => {
-  return (
-    <View>
-      <Text>modificarPaciente</Text>
-    </View>
-  )
-}
+  const route = useRoute<RouteProp<RouteParams, "ModificarPaciente">>();
+  const { pacienteId } = route.params;
 
-export default modificarPaciente
+  return (
+    <SafeAreaView className="flex-1 justify-center p-5 bg-blue-400 ">
+      <FormModificarPaciente id={pacienteId} />
+    </SafeAreaView>
+  );
+};
+
+export default modificarPaciente;

@@ -23,3 +23,10 @@ type Patient = {
   telefono: string;
   fechaControl: Date;
 };
+type Paciente = {
+  id: string;
+  nombre: string;
+  apellido: string;
+  rut: string;
+  telefono: string;
+};

@@ -1,37 +1,48 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Alert } from "react-native";
 import React from "react";
-import { router } from "expo-router";
+import { router, useNavigation } from "expo-router";
 
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Patient } from "@/types/types";
+import { usePacientes } from "@/context/PacienteContext";
 
 type Props = {
   patient: Patient;
 };
 
+
 const FichaPaciente = ({ patient }: Props) => {
+  const { archivarPaciente } = usePacientes();
+
   const grabarAudio = () => {
     console.log("audio grabado");
     router.push("/(home)/paciente/grabarAudio");
   };
 
-  const modificarDatos = () => {
-    console.log("Modificar Datos");
+  const navigation = useNavigation();
+  const handeModificarDatos = (pacienteId: string) => {
+    navigation.navigate("paciente/modificarPaciente", { pacienteId });
+    // router.navigate("/(home)/paciente/modificarPaciente");
   };
 
   const agregarCita = () => {
-    router.navigate('/(home)/paciente/agregarCita')
+    router.navigate("/(home)/paciente/agregarCita");
   };
 
   const verGrabaciones = () => {
-    console.log("Agregar Cita");
-    router.push("/(home)/paciente/grabaciones");
+    router.navigate("/(home)/paciente/grabaciones");
   };
 
   const handleAddNota = () => {
     console.log("Nota Agregada");
+  };
+
+  const handleArchivarPaciente = async (pacienteId: string) => {
+    await archivarPaciente(pacienteId);
+    Alert.alert(`Paciente ${pacienteId} archivado`);
+    router.navigate("/(home)");
   };
 
   return (
@@ -86,10 +97,10 @@ const FichaPaciente = ({ patient }: Props) => {
         </Pressable>
 
         <Pressable
-          onPress={grabarAudio}
+          onPress={verGrabaciones}
           className="bg-purple-500 p-4 rounded-lg"
         >
-          <Text className="text-white text-center">Grabar Audio</Text>
+          <Text className="text-white text-center">Ver Gravaciones</Text>
         </Pressable>
 
         <Pressable
@@ -97,6 +108,20 @@ const FichaPaciente = ({ patient }: Props) => {
           className="bg-purple-500 p-4 rounded-lg"
         >
           <Text className="text-white text-center">Agregar Cita</Text>
+        </Pressable>
+
+        <Pressable
+          onPress={() => handleArchivarPaciente(patient.id)}
+          className="bg-purple-500 p-4 rounded-lg"
+        >
+          <Text className="text-white text-center">Archivar Paciente</Text>
+        </Pressable>
+
+        <Pressable
+          onPress={() => handeModificarDatos(patient.id)}
+          className="bg-purple-500 p-4 rounded-lg"
+        >
+          <Text className="text-white text-center">Modificar Datos Paciente</Text>
         </Pressable>
       </View>
     </>
