@@ -2,6 +2,7 @@ import { Text } from "react-native";
 import { Redirect, Stack, Tabs } from "expo-router";
 import { useSession } from "@/context/AuthContext";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import Fontisto from '@expo/vector-icons/Fontisto';
 
 export default function HomeLayout() {
   const { session, isLoading } = useSession();
@@ -27,15 +28,7 @@ export default function HomeLayout() {
           ),
         }}
       />
-      <Tabs.Screen
-        name="citas"
-        options={{
-          title: "Citas",
-          tabBarIcon: ({ color }) => (
-            <FontAwesome size={28} name="book" color={color} />
-          ),
-        }}
-      />
+
       <Tabs.Screen
         name="archivados"
         options={{
@@ -54,12 +47,46 @@ export default function HomeLayout() {
           ),
         }}
       />
+
+      <Tabs.Screen
+        name="citas/index"
+        options={{
+          title: "Citas",
+          tabBarIcon: ({ color }) => (
+            <Fontisto name="date" size={24} color={color} />
+          ),
+        }}
+      />
+
+      {/* IGNORAR CITAS */}
+      <Tabs.Screen
+        name="citas/aniadirCita"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="citas/modificarCita"
+        options={{
+          href: null,
+        }}
+      />
+      <Tabs.Screen
+        name="citas/[id]"
+        options={{
+          href: null,
+        }}
+      />
+
+      {/* IGNORAR PERFIL */}
+
       <Tabs.Screen
         name="profile"
         options={{
           href: null,
         }}
       />
+      {/* IGNORAR PACIENTES */}
       <Tabs.Screen
         name="paciente/[id]"
         options={{

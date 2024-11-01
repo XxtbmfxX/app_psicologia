@@ -8,6 +8,7 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
+  query,
 } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { Alert } from "react-native";
@@ -25,7 +26,7 @@ type PacientesContextType = {
   agregarPaciente: (data: Omit<Paciente, "id">) => Promise<void>;
   archivarPaciente: (pacienteId: string) => Promise<void>;
   obtenerPacientePorId: (id: string) => Promise<null | any>;
-  actualizarPaciente :  (id: string, data: any) => Promise<void>;
+  actualizarPaciente: (id: string, data: any) => Promise<void>;
 };
 
 const PacientesContext = createContext<PacientesContextType | undefined>(
@@ -74,7 +75,7 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
     const docSnap = await getDoc(docRef);
     return docSnap.exists() ? docSnap.data() : null;
   };
-  
+
   const actualizarPaciente = async (id: string, data: any) => {
     const docRef = doc(db, "pacientes", id);
     await updateDoc(docRef, data);

@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface User {
   id: string;
   name: string;
@@ -15,14 +17,6 @@ export interface User {
 //   nextControl: Date;
 // }
 
-type Patient = {
-  id: string;
-  nombre: string;
-  apellido: string;
-  rut: string;
-  telefono: string;
-  fechaControl: Date;
-};
 type Paciente = {
   id: string;
   nombre: string;
@@ -30,3 +24,9 @@ type Paciente = {
   rut: string;
   telefono: string;
 };
+
+type Cita = {
+  idPaciene: string,
+  nombre: string,
+  fechaYHora: Timestamp
+}
