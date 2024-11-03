@@ -1,19 +1,20 @@
-import { View, Text} from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListaCitas from "@/components/mostrar/ListaCitas";
-import { Link } from "expo-router";
+import CustomLink from "@/components/common/CustomLink";
 
 const citas = () => {
   return (
-    <SafeAreaView>
-      <Text className="my-20 text-center text-2xl ">Citas</Text>
-      <View className="p-5">
-        <Link href={"/(home)/citas/aniadirCita"} >
-          <Text>Agregar cita owo</Text>
-        </Link>
-        <ListaCitas/>
+    <SafeAreaView className="flex-1 items-center p-5 bg-blue-400">
+      <View className="mb-10">
+        <CustomLink
+          ruta={"/(home)/citas/aniadirCita"}
+          titulo="Agregar cita ( •̀ .̫ •́ )✧"
+          key="Link a añadir cita"
+        />
       </View>
+      <ListaCitas />
     </SafeAreaView>
   );
 };

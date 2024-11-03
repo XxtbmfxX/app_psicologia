@@ -1,14 +1,18 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from "react-native";
+import React from "react";
+import { Cita } from "@/types/types";
+import FormIngresoCita from "@/components/Formulario/FormIngresoCita";
 
-type Props = {}
+type Props = {
+  cita: Cita;
+};
 
-const modificarCita = (props: Props) => {
+const modificarCita = ({ cita }: Props) => {
   return (
     <View>
-      <Text>modificarCita</Text>
+      <FormIngresoCita citaExistente={cita} />
     </View>
-  )
-}
+  );
+};
 
-export default modificarCita
+export default modificarCita;

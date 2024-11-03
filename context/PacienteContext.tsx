@@ -8,21 +8,15 @@ import {
   setDoc,
   deleteDoc,
   updateDoc,
-  query,
 } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { Alert } from "react-native";
-
-type Paciente = {
-  id: string;
-  nombre: string;
-  apellido: string;
-  rut: string;
-  telefono: string;
-};
+import { Paciente } from "@/types/types";
 
 type PacientesContextType = {
   pacientes: Paciente[];
+  pacientesArchivados: Paciente[];
+  obtenerPacientes: () => Promise<void>;
   agregarPaciente: (data: Omit<Paciente, "id">) => Promise<void>;
   archivarPaciente: (pacienteId: string) => Promise<void>;
   obtenerPacientePorId: (id: string) => Promise<null | any>;
@@ -47,6 +41,9 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [pacientes, setPacientes] = useState<Paciente[]>([]);
+  const [pacientesArchivados, setPacientesArchivados] = useState<Paciente[]>(
+    []
+  );
 
   const obtenerPacientes = async () => {
     try {
@@ -78,8 +75,9 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const actualizarPaciente = async (id: string, data: any) => {
     const docRef = doc(db, "pacientes", id);
+    await obtenerPacientes(); // Actualiza la lista
     await updateDoc(docRef, data);
-  }
+  };
 
   const archivarPaciente = async (pacienteId: string) => {
     try {
@@ -98,22 +96,41 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
       await setDoc(pacienteArchivadoRef, pacienteData);
 
       await deleteDoc(pacienteRef);
-
-      Alert.alert(
-        `Paciente ${pacienteRef} Eliminado con éxito (desde el context)`
-      );
+      await obtenerPacientes(); // Actualiza la lista
     } catch (error) {
       Alert.alert(`Error ☠️: ${error}`);
     }
   };
 
+  const obtenerPacientesArchivados = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "archivados"));
+      const pacientesArchivadosData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Paciente[];
+      setPacientesArchivados(pacientesArchivadosData);
+    } catch (error) {
+      console.error("Error al obtener pacientes archivados:", error);
+    }
+  };
+
   useEffect(() => {
     obtenerPacientes();
+    obtenerPacientesArchivados();
   }, []);
 
   return (
     <PacientesContext.Provider
-      value={{ pacientes, agregarPaciente, archivarPaciente, obtenerPacientePorId, actualizarPaciente }}
+      value={{
+        pacientes,
+        pacientesArchivados,
+        agregarPaciente,
+        archivarPaciente,
+        obtenerPacientePorId,
+        actualizarPaciente,
+        obtenerPacientes,
+      }}
     >
       {children}
     </PacientesContext.Provider>

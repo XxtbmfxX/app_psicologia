@@ -6,17 +6,6 @@ export interface User {
   email: string;
 }
 
-// Opcional
-// export interface Paciente {
-//   id: string;
-//   firstName: string;
-//   lastName: string;
-//   rut: string;
-//   dv: string;
-//   phone: string;
-//   nextControl: Date;
-// }
-
 type Paciente = {
   id: string;
   nombre: string;
@@ -26,7 +15,8 @@ type Paciente = {
 };
 
 type Cita = {
-  idPaciene: string,
-  nombre: string,
-  fechaYHora: Timestamp
-}
+  id: string;
+  idPaciente: string;
+  nombre: string;
+  fechaYHora: Timestamp;
+};

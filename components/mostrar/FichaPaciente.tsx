@@ -5,15 +5,14 @@ import { router, useNavigation } from "expo-router";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Patient } from "@/types/types";
+import { Paciente } from "@/types/types";
 import { usePacientes } from "@/context/PacienteContext";
 
 type Props = {
-  patient: Patient;
+  paciente: Paciente;
 };
 
-
-const FichaPaciente = ({ patient }: Props) => {
+const FichaPaciente = ({ paciente }: Props) => {
   const { archivarPaciente } = usePacientes();
 
   const grabarAudio = () => {
@@ -41,7 +40,7 @@ const FichaPaciente = ({ patient }: Props) => {
 
   const handleArchivarPaciente = async (pacienteId: string) => {
     await archivarPaciente(pacienteId);
-    Alert.alert(`Paciente ${pacienteId} archivado`);
+    Alert.alert(`Paciente ${paciente.nombre} archivado`);
     router.navigate("/(home)");
   };
 
@@ -74,11 +73,10 @@ const FichaPaciente = ({ patient }: Props) => {
       <View className="flex items-center h-full rounded-3xl bg-blue-400">
         {/* Datos Paciente */}
 
-        <Text>Nombre: {patient?.nombre}</Text>
-        <Text>Apellido: {patient?.apellido}</Text>
-        <Text>RUT: {patient?.rut}</Text>
-        <Text>Teléfono: {patient?.telefono}</Text>
-        <Text>Fecha de Control: {patient?.fechaControl?.toString()}</Text>
+        <Text>Nombre: {paciente?.nombre}</Text>
+        <Text>Apellido: {paciente?.apellido}</Text>
+        <Text>RUT: {paciente?.rut}</Text>
+        <Text>Teléfono: {paciente?.telefono}</Text>
 
         {/* Botones de redirección  */}
 
@@ -111,17 +109,19 @@ const FichaPaciente = ({ patient }: Props) => {
         </Pressable>
 
         <Pressable
-          onPress={() => handleArchivarPaciente(patient.id)}
+          onPress={() => handleArchivarPaciente(paciente.id)}
           className="bg-purple-500 p-4 rounded-lg"
         >
           <Text className="text-white text-center">Archivar Paciente</Text>
         </Pressable>
 
         <Pressable
-          onPress={() => handeModificarDatos(patient.id)}
+          onPress={() => handeModificarDatos(paciente.id)}
           className="bg-purple-500 p-4 rounded-lg"
         >
-          <Text className="text-white text-center">Modificar Datos Paciente</Text>
+          <Text className="text-white text-center">
+            Modificar Datos Paciente
+          </Text>
         </Pressable>
       </View>
     </>

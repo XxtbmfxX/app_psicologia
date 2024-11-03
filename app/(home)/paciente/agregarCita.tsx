@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Button, Alert } from 'react-native';
+import { View, Button, Alert, Text } from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
-import IngresoCita from '@/components/Formulario/IngresoCita';
 
 type FormData = {
   Fecha: Date;
@@ -23,7 +22,7 @@ export default function agregarCita() {
         padding: 16,
       }}
     >
-      <IngresoCita setValue={setValue} />
+      <Text>Aquí hay que ir al formulario de citas</Text>
       <Button title="Enviar" onPress={handleSubmit(onSubmit)} />
     </View>
   );

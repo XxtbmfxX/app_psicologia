@@ -5,18 +5,18 @@ import { useLocalSearchParams } from "expo-router";
 import { usePacientes } from "@/context/PacienteContext";
 import FichaPaciente from "@/components/mostrar/FichaPaciente";
 
-const PatientDetails = () => {
+const PacienteDetails = () => {
   const {  pacientes } = usePacientes();
   const { id } = useLocalSearchParams();
-  const patient = pacientes.find((p) => p.id === id);
+  const paciente = pacientes.find((p) => p.id === id);
 
-  if (!patient) return <Text>Paciente no encontrado</Text>;
+  if (!paciente) return <Text>Paciente no encontrado</Text>;
 
   return (
     <View className="p-4">
-      <FichaPaciente patient={patient} />
+      <FichaPaciente paciente={paciente} />
     </View>
   );
 };
 
-export default PatientDetails;
+export default PacienteDetails;

@@ -4,24 +4,34 @@ import { Link } from "expo-router";
 import { Cita } from "@/types/types";
 
 type Props = {
-  cita: Cita
+  cita: Cita;
 };
 
 const FilaCita = ({ cita }: Props) => {
+  // Convierte el Timestamp de Firebase a una instancia de Date
+  const dateObject = cita.fechaYHora.toDate();
 
-  // const date = cita.fechaYHora.toDate();
+  // Formatea la fecha y la hora
+  const formattedDate = dateObject.toLocaleDateString("es-ES");
+  const formattedTime = dateObject.toLocaleTimeString("es-ES", {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
   return (
-    <View className="flex flex-col  justify-around bg-green-500 my-5 p-5  rounded-lg" >
-
-      <Text className="text-white font-bold  mx-5" >{cita.idPaciene}</Text>
-      <Text className="text-white font-bold  mx-5" >{cita.nombre}</Text>
-      {/* <Text className="text-white font-bold  mx-5" >{date.toLocaleString()}</Text> */}
-      <Link href={{
-        pathname: '/(home)/citas/[id]',
-        params: { id: cita.idPaciene }
-      }}>
-        <Text className="text-xl text-end" >Editar</Text>
+    <View className="bg-green-500 rounded-lg my-5 p-5">
+      <Link
+        href={{
+          pathname: "/(home)/citas/[id]", // Ruta dinámica
+          params: { id: cita.idPaciente }, // Parámetro a enviar
+        }}
+      >
+        <Text className="text-white font-bold text-2xl">
+          {cita.nombre} - {formattedDate} -
+        </Text>
+        <Text className="text-white font-bold text-2xl text-right">
+          - {formattedTime}
+        </Text>
       </Link>
     </View>
   );
