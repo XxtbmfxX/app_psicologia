@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { usePacientes } from "@/context/PacienteContext";
@@ -7,27 +7,37 @@ import { Cita, Paciente } from "@/types/types";
 import { Picker } from "@react-native-picker/picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomPressable from "../common/CustomPressable";
-import CustomLink from "../common/CustomLink";
 
 type Props = {
-  citaExistente?: Cita; // Parámetro opcional para cita existente
+  citaId?: string; 
 };
 
-const FormIngresoCita = ({ citaExistente }: Props) => {
+const FormIngresoCita = ({ citaId }: Props) => {
   const router = useRouter();
   const { pacientes } = usePacientes();
-  const { addCita, updateCita } = useCitas();
+  const { addCita, updateCita, getCitaById } = useCitas();
 
-  const [pacienteId, setPacienteId] = useState(citaExistente?.idPaciente || "");
-  const [pacienteNombre, setPacienteNombre] = useState(
-    citaExistente?.nombre || ""
-  );
-  const [date, setDate] = useState(
-    citaExistente?.fechaYHora.toDate() || new Date()
-  );
+  const [pacienteId, setPacienteId] = useState("");
+  const [pacienteNombre, setPacienteNombre] = useState("");
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [error, setError] = useState("");
+
+  // Cargar los datos de la cita si citaId está presente
+  useEffect(() => {
+    const cargarCita = async () => {
+      if (citaId) {
+        const cita = await getCitaById(citaId);
+        if (cita) {
+          setPacienteId(cita.idPaciente);
+          setPacienteNombre(cita.nombre);
+          setDate(cita.fechaYHora.toDate());
+        }
+      }
+    };
+    cargarCita();
+  }, [citaId, getCitaById]);
 
   useEffect(() => {
     if (pacienteId && pacientes.length > 0) {
@@ -56,14 +66,17 @@ const FormIngresoCita = ({ citaExistente }: Props) => {
       idPaciente: pacienteId,
       nombre: pacienteNombre,
       fechaYHora: date,
-      ...(citaExistente ? { id: citaExistente.id } : {}), // Añadir ID si es edición
+      ...(citaId ? { id: citaId } : {}), // Añadir ID si es edición
     };
 
-    if (citaExistente) {
+    if (citaId) {
       await updateCita(citaData); // Actualizar cita existente
     } else {
       await addCita(citaData); // Añadir nueva cita
     }
+
+    Alert.alert("Cita agendada 😎")
+
     router.push("/(home)/citas");
   };
 

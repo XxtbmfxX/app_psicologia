@@ -23,6 +23,8 @@ type CitasContextType = {
   citas: Cita[];
   addCita: (data: Omit<Cita, "id">) => Promise<string | undefined>;
   updateCita: (cita: Cita) => Promise<string | undefined>;
+  getCitaById: (citaId: string) => Promise<Cita | null>;
+  deleteCita: (id: string) => Promise<string | undefined>;
 };
 
 const CitasContext = createContext<CitasContextType | undefined>(undefined);
@@ -53,6 +55,22 @@ export const CitasProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const getCitaById = async (citaId: string) => {
+    try {
+        const citaDoc = await getDoc(doc(db, "citas", citaId));
+        if (citaDoc.exists()) {
+            return { id: citaDoc.id, ...citaDoc.data() } as Cita;
+        } else {
+            console.error("No se encontró la cita con el ID proporcionado.");
+            return null;
+        }
+    } catch (error) {
+        console.error("Error al obtener la cita por ID:", error);
+        return null;
+    }
+};
+
+
   const addCita = async (data: Omit<Cita, "id">) => {
     try {
       console.log(data);
@@ -79,12 +97,23 @@ export const CitasProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const deleteCita = async (id: string) => {
+    try {
+      const citaRef = doc(db, "citas", id); // Referencia al documento en Firebase
+      await deleteDoc(citaRef); // Elimina el documento
+      await getCitas(); // Actualiza la lista de citas
+      return "Cita eliminada correctamente 😌";
+    } catch (error) {
+      console.error("Error al eliminar cita:", error);
+    }
+  };
+
   useEffect(() => {
     getCitas();
   }, []);
 
   return (
-    <CitasContext.Provider value={{ citas, addCita, updateCita }}>
+    <CitasContext.Provider value={{ citas, addCita, updateCita, getCitaById, deleteCita }}>
       {children}
     </CitasContext.Provider>
   );

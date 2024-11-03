@@ -66,7 +66,7 @@ export default function HomeLayout() {
         }}
       />
       <Tabs.Screen
-        name="citas/modificarCita"
+        name="citas/modificarCita/[idCita]"
         options={{
           href: null,
         }}
