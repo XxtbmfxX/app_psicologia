@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";  // Agregar esta importación
 import {
   initializeAuth,
   getAuth,
@@ -29,3 +30,7 @@ export const db = getFirestore(app);
 export const auth = initializeAuth(app, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
+
+
+// Inicializa Firebase Storage y exporta
+export const storage = getStorage(app);  // Exportación correcta de 'storage'
