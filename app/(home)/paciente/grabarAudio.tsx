@@ -13,15 +13,12 @@ const grabarAudio = (props: Props) => {
   const [audioFiles, setAudioFiles] = useState<string[]>([]);
   const [permissionResponse, requestPermission] = Audio.usePermissions();
 
-  // Función para crear una carpeta en el almacenamiento local
   const createDirectory = async (folderName: string) => {
     try {
       const directoryUri = FileSystem.documentDirectory + folderName;
 
-      // Verificar si el directorio ya existe
       const directoryInfo = await FileSystem.getInfoAsync(directoryUri);
       if (!directoryInfo.exists) {
-        // Si no existe, crear el directorio
         await FileSystem.makeDirectoryAsync(directoryUri, { intermediates: true });
         console.log(`Carpeta creada en: ${directoryUri}`);
       } else {
@@ -34,18 +31,14 @@ const grabarAudio = (props: Props) => {
     }
   };
 
-  // Función para guardar el archivo grabado en la carpeta
   const saveRecordingToDirectory = async (uri: string) => {
     try {
-      // Crear el directorio si no existe
-      const folderName = "AppPSAudio"; // Carpeta personalizada
+      const folderName = "AppPSAudio";
       const directoryUri = await createDirectory(folderName);
 
-      // Definir el nombre del archivo (puedes agregar una marca de tiempo o algo único)
       const fileName = `audio_${Date.now()}.m4a`;
       const localPath = directoryUri + "/" + fileName;
 
-      // Copiar el archivo grabado al nuevo directorio
       await FileSystem.copyAsync({
         from: uri,
         to: localPath,
@@ -54,17 +47,14 @@ const grabarAudio = (props: Props) => {
       console.log("Audio guardado localmente en:", localPath);
       setLocalFilePath(localPath);
 
-      // Agregar el nuevo archivo a la lista de archivos
       setAudioFiles((prevFiles) => [...prevFiles, localPath]);
 
-      // Guardar la lista de archivos en AsyncStorage
       await AsyncStorage.setItem("audioFiles", JSON.stringify([...audioFiles, localPath]));
     } catch (error) {
       console.error("Error al guardar el archivo de audio:", error);
     }
   };
 
-  // Cargar archivos grabados desde AsyncStorage al iniciar la app
   const loadAudioFiles = async () => {
     try {
       const savedFiles = await AsyncStorage.getItem("audioFiles");
@@ -76,11 +66,10 @@ const grabarAudio = (props: Props) => {
     }
   };
 
-  // Función para comenzar la grabación
   async function startRecording() {
     try {
       if (permissionResponse?.status !== "granted") {
-        console.log("Requesting permission..");
+        console.log("Solicitando Permisos..");
         await requestPermission();
       }
 
@@ -89,22 +78,21 @@ const grabarAudio = (props: Props) => {
         playsInSilentModeIOS: true,
       });
 
-      console.log("Starting recording..");
+      console.log("Inicio de Grabación..");
 
       const { recording } = await Audio.Recording.createAsync(
         Audio.RecordingOptionsPresets.HIGH_QUALITY
       );
 
       setRecording(recording);
-      console.log("Recording started");
+      console.log("Grabación Iniciada");
     } catch (err) {
-      console.error("Failed to start recording", err);
+      console.error("Error al Iniciar Grabación", err);
     }
   }
 
-  // Función para detener la grabación y guardar el archivo de audio localmente
   async function stopRecording() {
-    console.log("Stopping recording...");
+    console.log("Grabación Detenida...");
 
     if (recording) {
       await recording.stopAndUnloadAsync();
@@ -113,48 +101,41 @@ const grabarAudio = (props: Props) => {
       });
 
       const uri = recording.getURI();
-      console.log("Recording stopped and stored at", uri);
+      console.log("Grabación Detenida y Almacenada a", uri);
 
-      // Guardar el archivo en el directorio local
       if (uri) {
         saveRecordingToDirectory(uri);
       }
-      setRecording(undefined); // Limpiar el estado de la grabación
+      setRecording(undefined);
     }
   }
 
-  // Función para reproducir el archivo de audio guardado
   async function playAudio(localFilePath: string) {
     const { sound } = await Audio.Sound.createAsync({ uri: localFilePath });
     await sound.playAsync();
   }
 
-  // Función para eliminar un archivo
   const deleteAudio = async (filePath: string) => {
     try {
-      // Eliminar archivo del sistema de archivos
       await FileSystem.deleteAsync(filePath);
-      console.log("Audio eliminado de:", filePath);
+      console.log("Audio Eliminado De:", filePath);
 
-      // Eliminar el archivo de la lista de archivos
       const updatedFiles = audioFiles.filter((file) => file !== filePath);
       setAudioFiles(updatedFiles);
 
-      // Guardar la lista actualizada en AsyncStorage
       await AsyncStorage.setItem("audioFiles", JSON.stringify(updatedFiles));
     } catch (error) {
-      console.error("Error al eliminar el archivo de audio:", error);
+      console.error("Error al liminar el archivo de audio:", error);
     }
   };
 
-  // Renderizar cada archivo de audio en la lista
   const renderItem = ({ item }: { item: string }) => (
     <View style={{ padding: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
       <Button
         title={`Play Audio ${item.split('/').pop()}`}
         onPress={() => {
           playAudio(item).catch((err) => {
-            Alert.alert("Error", "Unable to play audio: " + err.message);
+            Alert.alert("Error", "No se puede reproducir audio: " + err.message);
           });
         }}
       />
@@ -166,7 +147,6 @@ const grabarAudio = (props: Props) => {
     </View>
   );
 
-  // Cargar archivos cuando se monta el componente
   useEffect(() => {
     loadAudioFiles();
   }, []);
@@ -174,7 +154,7 @@ const grabarAudio = (props: Props) => {
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Button
-        title={recording ? "Stop Recording" : "Start Recording"}
+        title={recording ? "Detener Grabación" : "Iniciar Grabación"}
         onPress={recording ? stopRecording : startRecording}
       />
 
@@ -182,7 +162,7 @@ const grabarAudio = (props: Props) => {
         <FlatList
           data={audioFiles}
           renderItem={renderItem}
-          keyExtractor={(item, index) => item + index} // Asegura que cada item sea único
+          keyExtractor={(item, index) => item + index} 
           style={{ marginTop: 20 }}
         />
       )}
