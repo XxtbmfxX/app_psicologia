@@ -1,9 +1,12 @@
+import { User } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 
-export interface User {
-  id: string;
-  name: string;
-  email: string;
+interface AuthContextProps {
+  user: User | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+  error: string | null;
+  loading: boolean;
 }
 
 type Paciente = {

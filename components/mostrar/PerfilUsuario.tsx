@@ -1,15 +1,33 @@
-import { useSession } from '@/context/AuthContext';
-import { View, Text, Button } from 'react-native';
+import { useSession } from "@/context/AuthContext";
+import {
+  View,
+  Text,
+  Button,
+  SafeAreaView,
+  ActivityIndicator,
+} from "react-native";
+import CustomPressable from "../common/CustomPressable";
+import { Redirect, router } from "expo-router";
 
 export default function PerfilUsuario() {
-  const { signOut, session } = useSession();
+  const { logout, user, loading } = useSession();
 
-  console.log(session)
+  const handleLogout = async () => {
+    await logout();
+    return <Redirect href="/" />;
+  };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>¡Bienvenido, {session?.email}!</Text>
-      <Button title="Cerrar sesión" onPress={signOut} />
-    </View>
+    <SafeAreaView
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+    >
+      <Text>¡Bienvenido, {user?.email}!</Text>
+
+      {loading ? (
+        <ActivityIndicator color="#2e90d1" />
+      ) : (
+        <CustomPressable title="Cerrar Sesión" onPress={handleLogout} />
+      )}
+    </SafeAreaView>
   );
 }

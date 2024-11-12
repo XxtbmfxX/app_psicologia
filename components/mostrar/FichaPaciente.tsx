@@ -1,7 +1,6 @@
 import { View, Text, Pressable, Alert } from "react-native";
 import React from "react";
 import { router, useNavigation } from "expo-router";
-
 import AntDesign from "@expo/vector-icons/AntDesign";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -14,16 +13,20 @@ type Props = {
 
 const FichaPaciente = ({ paciente }: Props) => {
   const { archivarPaciente } = usePacientes();
+  const navigation = useNavigation();
+
+
+  const handleAddNota = () => {
+    Alert.alert("De momento hay que integrar la API de Speech to Text （；´д｀）ゞ")
+  }
 
   const grabarAudio = () => {
     console.log("audio grabado");
     router.push("/(home)/paciente/grabarAudio");
   };
 
-  const navigation = useNavigation();
-  const handeModificarDatos = (pacienteId: string) => {
+  const handleModificarDatos = (pacienteId: string) => {
     navigation.navigate("paciente/modificarPaciente", { pacienteId });
-    // router.navigate("/(home)/paciente/modificarPaciente");
   };
 
   const agregarCita = () => {
@@ -32,10 +35,6 @@ const FichaPaciente = ({ paciente }: Props) => {
 
   const verGrabaciones = () => {
     router.navigate("/(home)/paciente/grabaciones");
-  };
-
-  const handleAddNota = () => {
-    console.log("Nota Agregada");
   };
 
   const handleArchivarPaciente = async (pacienteId: string) => {
@@ -47,12 +46,10 @@ const FichaPaciente = ({ paciente }: Props) => {
   return (
     <>
       {/* HEADER */}
-      <View className="flex flex-row justify-between my-5">
+      <View className="flex flex-row justify-between my-5 px-4">
         <Ionicons
           name="arrow-back-circle"
-          onPress={() => {
-            router.back();
-          }}
+          onPress={() => router.back()}
           size={58}
           color="black"
         />
@@ -60,68 +57,40 @@ const FichaPaciente = ({ paciente }: Props) => {
         <FontAwesome name="user-circle-o" size={58} color="black" />
 
         <AntDesign
-          onPress={() => {
-            handleAddNota();
-          }}
+          onPress={() => handleAddNota()}
           name="pluscircle"
           size={58}
           color="black"
         />
       </View>
 
-      {/* Card Paciente */}
-      <View className="flex items-center h-full rounded-3xl bg-blue-400">
-        {/* Datos Paciente */}
+      {/* CARD PACIENTE */}
+      <View className="rounded-3xl bg-blue-400 p-6 mx-4 shadow-lg">
+        <Text className="text-2xl font-semibold text-white mb-3">Datos del Paciente</Text>
+        <Text className="text-lg text-white mb-2">Nombre: {paciente.nombre}</Text>
+        <Text className="text-lg text-white mb-2">Apellido: {paciente.apellido}</Text>
+        <Text className="text-lg text-white mb-2">RUT: {paciente.rut}</Text>
+        <Text className="text-lg text-white mb-2">Teléfono: {paciente.telefono}</Text>
 
-        <Text>Nombre: {paciente?.nombre}</Text>
-        <Text>Apellido: {paciente?.apellido}</Text>
-        <Text>RUT: {paciente?.rut}</Text>
-        <Text>Teléfono: {paciente?.telefono}</Text>
-
-        {/* Botones de redirección  */}
-
-        <Pressable
-          onPress={grabarAudio}
-          className="bg-purple-500 p-4 rounded-lg"
-        >
+        {/* Botones de acción */}
+        <Pressable onPress={grabarAudio} className="bg-purple-600 p-4 rounded-lg mb-3 shadow-md">
           <Text className="text-white text-center">Grabar Audio</Text>
         </Pressable>
 
-        <Pressable
-          onPress={grabarAudio}
-          className="bg-purple-500 p-4 rounded-lg"
-        >
-          <Text className="text-white text-center">Grabar Audio</Text>
+        <Pressable onPress={verGrabaciones} className="bg-purple-600 p-4 rounded-lg mb-3 shadow-md">
+          <Text className="text-white text-center">Ver Grabaciones</Text>
         </Pressable>
 
-        <Pressable
-          onPress={verGrabaciones}
-          className="bg-purple-500 p-4 rounded-lg"
-        >
-          <Text className="text-white text-center">Ver Gravaciones</Text>
-        </Pressable>
-
-        <Pressable
-          onPress={agregarCita}
-          className="bg-purple-500 p-4 rounded-lg"
-        >
+        <Pressable onPress={agregarCita} className="bg-purple-600 p-4 rounded-lg mb-3 shadow-md">
           <Text className="text-white text-center">Agregar Cita</Text>
         </Pressable>
 
-        <Pressable
-          onPress={() => handleArchivarPaciente(paciente.id)}
-          className="bg-purple-500 p-4 rounded-lg"
-        >
+        <Pressable onPress={() => handleArchivarPaciente(paciente.id)} className="bg-red-600 p-4 rounded-lg mb-3 shadow-md">
           <Text className="text-white text-center">Archivar Paciente</Text>
         </Pressable>
 
-        <Pressable
-          onPress={() => handeModificarDatos(paciente.id)}
-          className="bg-purple-500 p-4 rounded-lg"
-        >
-          <Text className="text-white text-center">
-            Modificar Datos Paciente
-          </Text>
+        <Pressable onPress={() => handleModificarDatos(paciente.id)} className="bg-yellow-600 p-4 rounded-lg mb-3 shadow-md">
+          <Text className="text-white text-center">Modificar Datos</Text>
         </Pressable>
       </View>
     </>

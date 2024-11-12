@@ -5,25 +5,19 @@ import {
   useEffect,
   useState,
 } from "react";
+
+import { auth } from "@/firebaseConfig";
 import {
-  signInWithEmailAndPassword,
-  signOut as firebaseSignOut,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  signOut,
   User,
 } from "firebase/auth";
-import { auth } from "@/firebaseConfig";
 
-const AuthContext = createContext<{
-  signIn: (email: string, password: string) => Promise<void>;
-  signOut: () => Promise<void>;
-  session?: User | null;
-  isLoading: boolean;
-}>({
-  signIn: async () => {},
-  signOut: async () => {},
-  session: null,
-  isLoading: false,
-});
+import { useRouter } from "expo-router";
+import { AuthContextProps } from "@/types/types";
+
+const AuthContext = createContext<AuthContextProps | null>(null);
 
 export function useSession() {
   const context = useContext(AuthContext);
@@ -34,40 +28,58 @@ export function useSession() {
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [session, setSession] = useState<User | null>(null);
-  const [isLoading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setSession(user);
-      setLoading(false);
-    });
+  const router = useRouter();
 
-    return () => unsubscribe();
-  }, []);
-
-  const signIn = async (email: string, password: string) => {
+  const login = async (email: string, password: string) => {
     setLoading(true);
+    setError(null);
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-    } catch (error) {
-      console.error("Sign-in error:", error);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      setUser(userCredential.user);
+      // Navegación al home después de iniciar sesión
+      router.push("/(home)");
+    } catch (err: any) {
+      setError(`¡Oh no! No pudimos iniciar sesión (╯︵╰,) Verifica tus datos e intenta de nuevo.`);
     } finally {
       setLoading(false);
     }
   };
 
-  const signOut = async () => {
+  const logout = async () => {
+    setLoading(true);
     try {
-      await firebaseSignOut(auth);
-      setSession(null);
-    } catch (error) {
-      console.error("Sign-out error:", error);
+      await signOut(auth);
+      setUser(null);
+      // Navegación a la pantalla de login después de cerrar sesión
+      router.push("/");
+    } catch (err) {
+      console.error("Error cerrando sesión:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      if (currentUser) {
+        // Si el usuario está autenticado, redirige a '/home'
+        router.push("/(home)");
+      } else {
+        // Si no hay usuario autenticado, redirige a '/'
+        router.push("/");
+      }
+    });
+    return unsubscribe; // Asegúrate de limpiar el listener cuando el componente se desmonte
+  }, []); // No necesitas el router como dependencia aquí
+  
+
   return (
-    <AuthContext.Provider value={{ signIn, signOut, session, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, error, loading }}>
       {children}
     </AuthContext.Provider>
   );

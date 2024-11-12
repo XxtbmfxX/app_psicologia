@@ -1,4 +1,3 @@
-// [id].tsx
 import React from "react";
 import { View, Text } from "react-native";
 import { useLocalSearchParams } from "expo-router";
@@ -13,14 +12,16 @@ const PacienteDetails = () => {
 
   if (!paciente) {
     return (
-      <SafeAreaView className="flex-1 items-center p-5 bg-blue-400">
-        <Text>Paciente no encontrado</Text>
+      <SafeAreaView className="flex-1 items-center justify-center bg-blue-100 p-5">
+        <Text className="text-xl font-semibold text-gray-700">
+          Paciente no encontrado (#｀-_ゝ-)
+        </Text>
       </SafeAreaView>
     );
   }
 
   return (
-    <View className="p-4">
+    <View className="flex-1 p-4 bg-white">
       <FichaPaciente paciente={paciente} />
     </View>
   );

@@ -1,46 +1,102 @@
-import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
-import { router } from 'expo-router';
+import React from "react";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ActivityIndicator,
+  SafeAreaView,
+} from "react-native";
+import { useForm, Controller } from "react-hook-form";
+import { useSession } from "@/context/AuthContext";
 
-const FormInicioSesion: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+interface LoginFormData {
+  email: string;
+  password: string;
+}
 
-  const handleLogin = () => {
-    // Lógica de inicio de sesión (por implementar)
-    router.navigate('/(home)');
-  };
+const LoginForm: React.FC = () => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormData>();
+  const { login, error, loading } = useSession();
 
-  const handleForgotPassword = () => {
-    // Lógica de recuperación de contraseña (por implementar)
-    router.navigate('/recuperarContrasenia');
+  const onSubmit = async (data: LoginFormData) => {
+    await login(data.email, data.password);
   };
 
   return (
-    <View className="flex-1 justify-center items-center p-4">
-      <Text className="text-lg font-bold mb-4">Iniciar Sesión</Text>
-      <TextInput
-        value={username}
-        onChangeText={setUsername}
-        placeholder="Usuario"
-        className="border border-gray-300 rounded p-2 mb-4 w-full"
-      />
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder="Contraseña"
-        secureTextEntry
-        className="border border-gray-300 rounded p-2 mb-4 w-full"
-      />
-      <Button title="Iniciar Sesión" onPress={handleLogin} />
-      <Text
-        className="mt-4 text-blue-500"
-        onPress={handleForgotPassword}
-      >
-        ¿Olvidaste tu contraseña?
+    <SafeAreaView className="flex-1 justify-center px-4 bg-white">
+      <Text className="text-3xl font-bold text-center mb-6">
+        Iniciar Sesión
       </Text>
-    </View>
+
+      {error && <Text className="text-red-500 text-center mb-4">{error}</Text>}
+
+      <Controller
+        control={control}
+        name="email"
+        rules={{
+          required: "Email es requerido (つ﹏<。)",
+          pattern: {
+            value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+            message: "Formato de correo no válido",
+          },
+        }}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            className="border-b border-gray-300 py-2 mb-4"
+            placeholder="Correo electrónico"
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+      {errors.email && (
+        <Text className="text-red-500">{errors.email.message}</Text>
+      )}
+
+      <Controller
+        control={control}
+        name="password"
+        rules={{
+          required: "Contraseña es requerida (；￣Д￣)",
+          minLength: {
+            value: 6,
+            message: "La contraseña debe tener al menos 6 caracteres",
+          },
+        }}
+        render={({ field: { onChange, value } }) => (
+          <TextInput
+            className="border-b border-gray-300 py-2 mb-4"
+            placeholder="Contraseña"
+            secureTextEntry
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+      {errors.password && (
+        <Text className="text-red-500">{errors.password.message}</Text>
+      )}
+
+      <TouchableOpacity
+        onPress={handleSubmit(onSubmit)}
+        className="bg-blue-500 py-3 rounded-md mt-4"
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text className="text-white text-center font-bold">
+            Iniciar Sesión
+          </Text>
+        )}
+      </TouchableOpacity>
+    </SafeAreaView>
   );
 };
 
-export default FormInicioSesion;
+export default LoginForm;

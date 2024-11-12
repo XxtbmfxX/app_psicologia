@@ -1,19 +1,28 @@
 import { Text } from "react-native";
-import { Redirect, Stack, Tabs } from "expo-router";
+import { Redirect, router, Stack, Tabs } from "expo-router";
 import { useSession } from "@/context/AuthContext";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import Fontisto from '@expo/vector-icons/Fontisto';
+import { useEffect, useState } from "react";
 
 export default function HomeLayout() {
-  const { session, isLoading } = useSession();
+  const { user, loading } = useSession();
+  
+  useEffect(() => {
+    // Solo redirige cuando `loading` es falso y el usuario no está autenticado
+    if (!loading && !user) {
+      router.push("/");
+    }
+  }, [loading, user]);
 
-  if (isLoading) {
+  if (loading) {
     return <Text>Loading...</Text>;
   }
 
-  if (!session) {
-    return <Redirect href="/" />;
+  if (!user) {
+    return <Redirect href="/" />; // También se puede usar un <Redirect /> si lo prefieres
   }
+
 
   return (
     <Tabs

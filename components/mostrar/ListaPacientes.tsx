@@ -1,13 +1,17 @@
 import { usePacientes } from "@/context/PacienteContext";
 import React from "react";
-import { FlatList, Text } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import FilaPaciente from "./FilaPaciente";
 
 const ListaPacientes = () => {
   const { pacientes, obtenerPacientes } = usePacientes();
 
   if (pacientes.length === 0) {
-    return <Text>No hay pacientes (#｀-_ゝ-)</Text>;
+    return (
+      <Text className="text-center text-xl text-gray-500">
+        No hay pacientes (#｀-_ゝ-)
+      </Text>
+    );
   }
 
   return (
@@ -17,6 +21,7 @@ const ListaPacientes = () => {
       renderItem={({ item }) => (
         <FilaPaciente id={item.id} nombre={item.nombre} />
       )}
+      className="px-4 py-6"
     />
   );
 };
