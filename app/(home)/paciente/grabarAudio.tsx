@@ -115,18 +115,37 @@ const grabarAudio = (props: Props) => {
     await sound.playAsync();
   }
 
+  // Función de eliminación con confirmación
   const deleteAudio = async (filePath: string) => {
-    try {
-      await FileSystem.deleteAsync(filePath);
-      console.log("Audio Eliminado De:", filePath);
+    // Mostrar el cuadro de confirmación
+    Alert.alert(
+      "Eliminar Audio",
+      "¿Estás seguro de que quieres eliminar este audio?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Eliminación cancelada"),
+          style: "cancel",
+        },
+        {
+          text: "Eliminar",
+          onPress: async () => {
+            try {
+              await FileSystem.deleteAsync(filePath);
+              console.log("Audio Eliminado De:", filePath);
 
-      const updatedFiles = audioFiles.filter((file) => file !== filePath);
-      setAudioFiles(updatedFiles);
+              const updatedFiles = audioFiles.filter((file) => file !== filePath);
+              setAudioFiles(updatedFiles);
 
-      await AsyncStorage.setItem("audioFiles", JSON.stringify(updatedFiles));
-    } catch (error) {
-      console.error("Error al liminar el archivo de audio:", error);
-    }
+              await AsyncStorage.setItem("audioFiles", JSON.stringify(updatedFiles));
+            } catch (error) {
+              console.error("Error al eliminar el archivo de audio:", error);
+            }
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
 
   const renderItem = ({ item }: { item: string }) => (
@@ -162,7 +181,7 @@ const grabarAudio = (props: Props) => {
         <FlatList
           data={audioFiles}
           renderItem={renderItem}
-          keyExtractor={(item, index) => item + index} 
+          keyExtractor={(item, index) => item + index}
           style={{ marginTop: 20 }}
         />
       )}
