@@ -9,7 +9,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import CustomPressable from "../common/CustomPressable";
 
 type Props = {
-  citaId?: string; 
+  citaId?: string;
 };
 
 const FormIngresoCita = ({ citaId }: Props) => {
@@ -75,7 +75,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
       await addCita(citaData); // Añadir nueva cita
     }
 
-    Alert.alert("Cita agendada 😎")
+    Alert.alert("Cita agendada 😎");
 
     router.push("/(home)/citas");
   };

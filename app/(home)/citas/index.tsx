@@ -6,8 +6,8 @@ import CustomLink from "@/components/common/CustomLink";
 
 const citas = () => {
   return (
-    <SafeAreaView className="flex-1 items-center p-5 bg-blue-400">
-      <View className="mb-10">
+    <SafeAreaView className="flex-1 items-center align-middle bg-blue-400">
+      <View className="my-5">
         <CustomLink
           ruta={"/(home)/citas/aniadirCita"}
           titulo="Agregar cita ( •̀ .̫ •́ )✧"

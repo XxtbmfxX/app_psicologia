@@ -2,12 +2,12 @@ import { Text } from "react-native";
 import { Redirect, router, Stack, Tabs } from "expo-router";
 import { useSession } from "@/context/AuthContext";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
-import Fontisto from '@expo/vector-icons/Fontisto';
+import Fontisto from "@expo/vector-icons/Fontisto";
 import { useEffect, useState } from "react";
 
 export default function HomeLayout() {
   const { user, loading } = useSession();
-  
+
   useEffect(() => {
     // Solo redirige cuando `loading` es falso y el usuario no está autenticado
     if (!loading && !user) {
@@ -22,7 +22,6 @@ export default function HomeLayout() {
   if (!user) {
     return <Redirect href="/" />; // También se puede usar un <Redirect /> si lo prefieres
   }
-
 
   return (
     <Tabs
@@ -117,18 +116,17 @@ export default function HomeLayout() {
       />
 
       <Tabs.Screen
-        name="paciente/modificarPaciente"
-        options={{
-          href: null,
-        }}
-      />
-      <Tabs.Screen
         name="paciente/transcipciones"
         options={{
           href: null,
         }}
       />
-   
+      <Tabs.Screen
+        name="paciente/modificarPaciente/[idPaciente]"
+        options={{
+          href: null,
+        }}
+      />
     </Tabs>
   );
 }

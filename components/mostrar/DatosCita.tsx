@@ -1,83 +1,64 @@
-import { View, Text, Alert } from "react-native";
 import React from "react";
-import { Cita } from "@/types/types";
-import CustomPressable from "../common/CustomPressable";
-import { router, useLocalSearchParams } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
-import FormIngresoCita from "../Formulario/FormIngresoCita";
+import { View, Text, Alert, SafeAreaView } from "react-native";
+import { useLocalSearchParams, router } from "expo-router";
 import { useCitas } from "@/context/CitasContext";
+import CustomPressable from "../common/CustomPressable";
 
-type Props = {};
-
-const DatosCita = (props: Props) => {
-  const { citas, deleteCita } = useCitas();
-
+const DatosCita = () => {
   const { id } = useLocalSearchParams();
-  const cita: Cita | undefined = citas.find((c) => c.id === id);
+  const { citas, deleteCita, moverCita } = useCitas();
 
-  // Convierte el Timestamp de Firebase a una instancia de Date
-  const dateObject = cita?.fechaYHora.toDate();
+  const cita = citas.find((c) => c.id === id);
 
-  // Formatea la fecha y la hora
-  const formattedDate = dateObject?.toLocaleDateString("es-ES");
-  const formattedTime = dateObject?.toLocaleTimeString("es-ES", {
+  if (!cita) {
+    return (
+      <View className="flex-1 justify-center items-center">
+        <Text className="text-gray-500">Cita no encontrada.</Text>
+      </View>
+    );
+  }
+
+  const dateObject = cita.fechaYHora.toDate();
+  const formattedDate = dateObject.toLocaleDateString("es-ES");
+  const formattedTime = dateObject.toLocaleTimeString("es-ES", {
     hour: "2-digit",
     minute: "2-digit",
   });
 
-  const hadleEditCita = () => {
-    router.push(`/citas/modificarCita/${cita?.id}`);
+  const handleEliminarCita = async () => {
+    if (!cita.id) return;
+    await deleteCita(cita.id);
+    Alert.alert("Cita eliminada 😊");
+    router.replace("/citas");
   };
 
-  const hadleEliminarCita = async () => {
-    if (!cita?.id) {
-      console.log("No se encontró la cita para eliminar ✖️");
-      return;
-    }
-
-    const mensaje = await deleteCita(cita.id);
-    console.log(mensaje);
-    Alert.alert("Cita elimindad 😊")
-    router.back(); // Vuelve a la pantalla anterior después de eliminar
-  };
-
+  // const handleMoverCita = async () => {
+  //   if (!cita.id) return;
+  //   try {
+  //     await moverCita(cita.id); // Agregar a la nueva colección
+  //     Alert.alert("Cita hecha 😊");
+  //     router.replace("/citas");
+  //   } catch (error) {
+  //     Alert.alert("Error al mover la cita ☠️");
+  //   }
+  // };
   if (cita === undefined) {
     return <Text>Cita no encontrada</Text>;
   }
-
   return (
-    <View className="flex flex-col justify-center h-full w-full">
+    <SafeAreaView className="flex-1 w-full">
+      <CustomPressable title="Atrás" onPress={() => router.push("/citas")} />
       <CustomPressable
-        onPress={() => {
-          router.back();
-        }}
-        title="Atrás"
+        title="Modificar Cita"
+        onPress={() => router.push(`/citas/modificarCita/${cita?.id}`)}
       />
-      <CustomPressable onPress={hadleEditCita} title="Modificar Cita" />
-      <CustomPressable onPress={hadleEliminarCita} title="Eliminar Cita" />
-      <View className="bg-white rounded-lg p-2">
-        <View className="flex flex-row align-middle justify-between w-full my-5">
-          <Text className=""> Id Cita: </Text>
-          <Text className=""> {cita?.id}</Text>
-        </View>
-        <View className="flex flex-row align-middle justify-between w-full my-5">
-          <Text className="text-xl"> Fecha: </Text>
-          <Text className="text-xl"> {formattedDate}</Text>
-        </View>
-        <View className="flex flex-row align-middle justify-between w-full my-5">
-          <Text className="text-xl"> Hora: </Text>
-          <Text className="text-xl"> {formattedTime}</Text>
-        </View>
-        <View className="flex flex-row align-middle justify-between w-full my-5">
-          <Text className="text-xl"> Nombre: </Text>
-          <Text className="text-xl"> {cita?.nombre}</Text>
-        </View>
-        <View className="flex flex-row align-middle justify-between w-full my-5">
-          <Text className=""> Id Paciente: </Text>
-          <Text className=""> {cita?.idPaciente}</Text>
-        </View>
+      <CustomPressable title="Eliminar Cita" onPress={handleEliminarCita} />
+      <View className="bg-white rounded-lg shadow p-4 mt-4">
+        <Text className="text-lg">Fecha: {formattedDate}</Text>
+        <Text className="text-lg">Hora: {formattedTime}</Text>
+        <Text className="text-lg">Nombre: {cita.nombre}</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 

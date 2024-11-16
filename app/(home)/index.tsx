@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { StatusBar, View } from "react-native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -8,7 +8,9 @@ import InputBusqueda from "@/components/InputBusqueda";
 export default function Index() {
   return (
     <SafeAreaView className="flex-1 items-center p-2 bg-blue-400">
-      <View className="self-end mb-10">
+      <StatusBar animated={true} backgroundColor="#60a5fa" />
+
+      <View className="self-end my-2">
         <Link href={"/profile"}>
           <FontAwesome5 name="user-circle" size={44} color="black" />
         </Link>

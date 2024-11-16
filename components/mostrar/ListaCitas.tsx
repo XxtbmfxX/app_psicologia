@@ -1,23 +1,37 @@
-import { View, Text, FlatList } from "react-native";
 import React from "react";
+import { View, Text, FlatList } from "react-native";
+import Animated, { SlideInLeft, SlideOutRight } from "react-native-reanimated";
 import FilaCita from "./FilaCita";
 import { useCitas } from "@/context/CitasContext";
 
-type Props = {};
-
-const ListaCitas = (props: Props) => {
+const ListaCitas = () => {
   const { citas } = useCitas();
 
   if (citas.length === 0) {
-    return <Text>No hay citas (#｀-_ゝ-)</Text>;
+    return (
+      <View className="flex items-center justify-center h-full">
+        <Text className="text-gray-500 text-lg">
+          No hay citas por el momento (#｀-_ゝ-)
+        </Text>
+      </View>
+    );
   }
 
   return (
-    <View className="flex items-center w-full bg-blue-500 rounded-lg">
+    <View className="flex items-center w-full p-4">
       <FlatList
         data={citas}
-        renderItem={({ item }) => <FilaCita cita={item} />}
+        renderItem={({ item }) => (
+          <Animated.View
+            entering={SlideInLeft}
+            exiting={SlideOutRight}
+            className="w-full"
+          >
+            <FilaCita cita={item} />
+          </Animated.View>
+        )}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 20 }}
       />
     </View>
   );
