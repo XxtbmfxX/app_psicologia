@@ -2,6 +2,7 @@ import { View, Text, FlatList } from 'react-native'
 import React from 'react'
 import { Paciente } from '@/types/types';
 import { usePacientes } from '@/context/PacienteContext';
+import FilaArchivado from './FilaArchivado';
 
 type Props = {}
 
@@ -16,8 +17,9 @@ const ListaArchivados = (props: Props) => {
     <FlatList
       data={pacientesArchivados}
       keyExtractor={(item) => item.id}
+      className='bg-gray-200 rounded-lg p-5 w-full'
       renderItem={({ item }) => (
-        <Text id={item.id} >Paciente: {item.nombre} </Text>
+        <FilaArchivado id={item.id} nombre={item.nombre} />
       )}
     />
   );

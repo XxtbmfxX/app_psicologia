@@ -128,12 +128,7 @@ export default function HomeLayout() {
           href: null,
         }}
       />
-      <Tabs.Screen
-        name="paciente/agregarCita"
-        options={{
-          href: null,
-        }}
-      />
+   
     </Tabs>
   );
 }

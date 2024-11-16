@@ -19,6 +19,7 @@ type PacientesContextType = {
   obtenerPacientes: () => Promise<void>;
   agregarPaciente: (data: Omit<Paciente, "id">) => Promise<void>;
   archivarPaciente: (pacienteId: string) => Promise<void>;
+  devolverPacienteArchivado: (pacienteId: string) => Promise<void>;
   obtenerPacientePorId: (id: string) => Promise<null | any>;
   actualizarPaciente: (id: string, data: any) => Promise<void>;
 };
@@ -75,8 +76,8 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const actualizarPaciente = async (id: string, data: any) => {
     const docRef = doc(db, "pacientes", id);
-    await obtenerPacientes(); // Actualiza la lista
     await updateDoc(docRef, data);
+    await obtenerPacientes(); // Actualiza la lista
   };
 
   const archivarPaciente = async (pacienteId: string) => {
@@ -85,7 +86,7 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
       const pacienteSnapshot = await getDoc(pacienteRef);
       if (!pacienteSnapshot.exists()) {
         Alert.alert(
-          `El documento ${pacienteSnapshot} o ${pacienteRef} no existe 💀💀`
+          `El documento con ID "${pacienteId}" no existe en "pacientes" 💀`
         );
         return;
       }
@@ -97,8 +98,33 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
 
       await deleteDoc(pacienteRef);
       await obtenerPacientes(); // Actualiza la lista
+      await obtenerPacientesArchivados();
     } catch (error) {
       Alert.alert(`Error ☠️: ${error}`);
+    }
+  };
+
+  const devolverPacienteArchivado = async (pacienteId: string) => {
+    try {
+      const pacienteArchivadoRef = doc(db, "archivados", pacienteId);
+      const pacienteArchivadoSnapshot = await getDoc(pacienteArchivadoRef);
+      if (!pacienteArchivadoSnapshot.exists()) {
+        Alert.alert(
+          `El documento con ID "${pacienteId}" no existe en "archivados" 😢`
+        );
+        return;
+      }
+
+      const pacienteData = pacienteArchivadoSnapshot.data();
+
+      const pacienteRef = doc(db, "pacientes", pacienteId);
+      await setDoc(pacienteRef, pacienteData);
+
+      await deleteDoc(pacienteArchivadoRef);
+      await obtenerPacientes(); // Actualiza la lista
+      await obtenerPacientesArchivados();
+    } catch (error) {
+      Alert.alert(`Error 😰: ${error}`);
     }
   };
 
@@ -130,6 +156,7 @@ export const PacientesProvider: React.FC<{ children: React.ReactNode }> = ({
         obtenerPacientePorId,
         actualizarPaciente,
         obtenerPacientes,
+        devolverPacienteArchivado,
       }}
     >
       {children}

@@ -55,7 +55,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
       await signOut(auth);
       setUser(null);
       // Navegación a la pantalla de login después de cerrar sesión
-      router.push("/");
+      router.push("/(auth)");
     } catch (err) {
       console.error("Error cerrando sesión:", err);
     } finally {
@@ -71,7 +71,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
         router.push("/(home)");
       } else {
         // Si no hay usuario autenticado, redirige a '/'
-        router.push("/");
+        router.push("/(auth)");
       }
     });
     return unsubscribe; // Asegúrate de limpiar el listener cuando el componente se desmonte
