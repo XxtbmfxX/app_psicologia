@@ -17,9 +17,7 @@ const FilaPaciente: React.FC<FilaPacienteProps> = ({ id, nombre }) => {
       }}
     >
       <View className="p-4">
-        <Text className="text-lg w-2/4 font-semibold text-blue-600">
-          {nombre}
-        </Text>
+        <Text className="text-lg font-semibold text-blue-600">{nombre}</Text>
       </View>
     </Link>
   );

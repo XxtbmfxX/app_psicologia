@@ -1,27 +1,28 @@
-import { View, Text, TextInput } from "react-native";
 import React, { useState } from "react";
+import { TextInput, View } from "react-native";
+import { usePacientes } from "@/context/PacienteContext";
 import { Ionicons } from "@expo/vector-icons";
 
-type Props = {};
-
-const InputBusqueda = (props: Props) => {
+const InputBusqueda = () => {
+  const { setFiltroBusqueda } = usePacientes(); // Nueva función desde el contexto
+  const [busqueda, setBusqueda] = useState("");
   const [isFocused, setIsFocused] = useState(false);
 
+  const manejarCambio = (texto: string) => {
+    setBusqueda(texto);
+    setFiltroBusqueda(texto); // Actualiza el filtro en el contexto
+  };
+
   return (
-    <View className="flex-row items-center bg-gray-200 rounded-2xl px-4 py-2 w-full">
-      <Ionicons
-        name="search"
-        size={20}
-        className={`text-gray-500 ${isFocused ? "text-blue-500" : "text-gray-500"}`}
-      />
+    <View className="flex-row items-center align-middle rounded-2xl px-4 py-2 w-full">
       <TextInput
-        className={`flex-1 ml-2 text-base h-12 ${
-          isFocused ? "bg-gray-100" : "bg-transparent"
-        }`}
-        placeholder="Search..."
+        className="w-full p-3 border border-gray-300 rounded-lg bg-white text-gray-700"
+        placeholder="Buscar paciente por nombre"
+        placeholderTextColor="#888"
+        value={busqueda}
+        onChangeText={manejarCambio}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        onSubmitEditing={() => console.log("ok")}
       />
     </View>
   );
