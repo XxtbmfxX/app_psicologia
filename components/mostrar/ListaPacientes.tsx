@@ -1,12 +1,13 @@
-import { usePacientes } from "@/context/PacienteContext";
 import React from "react";
 import { FlatList, Text, View } from "react-native";
+import { usePacientes } from "@/context/PacienteContext";
+import Animated, { BounceIn, FadeIn, FadeOut } from "react-native-reanimated";
 import FilaPaciente from "./FilaPaciente";
 
 const ListaPacientes = () => {
-  const { pacientes, obtenerPacientes } = usePacientes();
+  const { pacientesFiltrados } = usePacientes(); // Pacientes filtrados desde el contexto
 
-  if (pacientes.length === 0) {
+  if (pacientesFiltrados.length === 0) {
     return (
       <Text className="text-center text-xl text-gray-500">
         No hay pacientes (#｀-_ゝ-)
@@ -16,12 +17,17 @@ const ListaPacientes = () => {
 
   return (
     <FlatList
-      data={pacientes}
+      data={pacientesFiltrados}
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => (
-        <FilaPaciente id={item.id} nombre={item.nombre} />
+        <Animated.View
+          entering={FadeIn}
+          exiting={FadeOut}
+        >
+          <FilaPaciente id={item.id} nombre={item.nombre} />
+        </Animated.View>
       )}
-      className="px-4 py-6"
+      className=" w-full px-4"
     />
   );
 };

@@ -7,16 +7,16 @@ import InputBusqueda from "@/components/InputBusqueda";
 
 export default function Index() {
   return (
-    <SafeAreaView className="flex-1 items-center p-5 bg-blue-400">
-      <View className=" self-end mb-10">
+    <SafeAreaView className="flex-1 items-center p-2 bg-blue-400">
+      <View className="self-end mb-10">
         <Link href={"/profile"}>
           <FontAwesome5 name="user-circle" size={44} color="black" />
         </Link>
       </View>
-      <View className="p-2">
+      <View className="w-full">
         <InputBusqueda />
-        <ListaPacientes />
       </View>
+        <ListaPacientes />
     </SafeAreaView>
   );
 }
