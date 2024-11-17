@@ -111,7 +111,7 @@ export default function HomeLayout() {
               }}
             />
             <Tabs.Screen
-              name="paciente/grabaciones/index"
+              name="paciente/grabaciones/[nombrePaciente]"
               options={{
                 href: null,
               }}

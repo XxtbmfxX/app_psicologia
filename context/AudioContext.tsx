@@ -16,9 +16,7 @@ type AudioContextType = {
 
 const AudioContext = createContext<AudioContextType | undefined>(undefined);
 
-export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [audioFiles, setAudioFiles] = useState<AudioFile[]>([]);
 
   const loadAudioFiles = async () => {
@@ -59,9 +57,7 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <AudioContext.Provider
-      value={{ audioFiles, addAudio, deleteAudio, loadAudioFiles }}
-    >
+    <AudioContext.Provider value={{ audioFiles, addAudio, deleteAudio, loadAudioFiles }}>
       {children}
     </AudioContext.Provider>
   );
@@ -69,7 +65,6 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({
 
 export const useAudioContext = (): AudioContextType => {
   const context = useContext(AudioContext);
-  if (!context)
-    throw new Error("useAudioContext debe usarse dentro de un AudioProvider");
+  if (!context) throw new Error("useAudioContext debe usarse dentro de un AudioProvider");
   return context;
 };
