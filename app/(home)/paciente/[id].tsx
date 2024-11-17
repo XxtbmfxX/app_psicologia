@@ -21,9 +21,9 @@ const PacienteDetails = () => {
   }
 
   return (
-    <View className="flex-1 p-4 bg-white">
+    <SafeAreaView className="flex-1 justify-center p-4">
       <FichaPaciente paciente={paciente} />
-    </View>
+    </SafeAreaView>
   );
 };
 
