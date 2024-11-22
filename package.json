@@ -10,7 +10,6 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "eas:android": "eas build -p android --profile preview",
     "storybook-generate": "sb-rn-get-stories"
   },
   "jest": {
