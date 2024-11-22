@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Button, Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import CryptoJS from "crypto-js";
-
-const secretKey = "mySecretKey";
 
 const DecryptData = () => {
   const [decryptedData, setDecryptedData] = useState<string | null>(null);
@@ -14,9 +11,8 @@ const DecryptData = () => {
       Alert.alert("No data found!");
       return;
     }
-    const bytes = CryptoJS.AES.decrypt(encryptedData, secretKey);
-    const originalData = bytes.toString(CryptoJS.enc.Utf8);
-    setDecryptedData(originalData);
+
+    setDecryptedData(encryptedData);
   };
 
   return (

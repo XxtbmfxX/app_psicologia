@@ -1,75 +1,72 @@
-import React from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react";
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import { styled } from "nativewind";
+
+const AppContainer = styled(View);
+const StyledTextInput = styled(TextInput);
+const StyledText = styled(Text);
+const StyledButton = styled(TouchableOpacity);
+
 import CryptoJS from "crypto-js";
 
-type FormData = {
-  name: string;
-  email: string;
-};
+const SECRET_KEY = "mi_clave_secreta_123"; // ¡No expongas esta clave en tu código fuente!
 
-const secretKey = "mySecretKey";
+const BcryptComponent: React.FC = () => {
+  const [text, setText] = useState("");
+  const [cipherText, setcipherText] = useState("");
 
-const FormEncrypt = () => {
-  const { control, handleSubmit, reset } = useForm<FormData>();
-
-  const encryptData = (data: FormData) => {
-    return CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
+  // Función para encriptar
+  const encryptData = () => {
+    const cpText = CryptoJS.AES.encrypt(
+      JSON.stringify(text),
+      SECRET_KEY
+    ).toString();
+    console.log(cpText)
+    setcipherText(cipherText)
   };
 
-  const saveData = async (data: FormData) => {
-    const encryptedData = encryptData(data);
-    console.log(data)
-    await AsyncStorage.setItem("datosEncriptados", data.toString());
-    console.log("Encrypted Data:", encryptedData);
-    Alert.alert("Data saved securely!");
-    reset();
+  // Función para desencriptar
+  const decryptData = () => {
+    const bytes = CryptoJS.AES.decrypt(cipherText, SECRET_KEY);
+    const originalData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    console.log(originalData)
   };
-
   return (
-    <View className="flex-1 justify-center p-4 bg-gray-100">
-      <Text className="text-lg font-bold text-center mb-4">Secure Form</Text>
+    <AppContainer className="flex-1 justify-center items-center bg-gray-100 p-4">
+      <StyledText className="text-2xl font-bold mb-4">
+        Hash y Verificación
+      </StyledText>
 
-      <Controller
-        name="name"
-        control={control}
-        defaultValue=""
-        rules={{ required: "Name is required" }}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <View className="mb-4">
-            <TextInput
-              className="border border-gray-300 rounded-lg p-2"
-              placeholder="Name"
-              value={value}
-              onChangeText={onChange}
-            />
-            {error && <Text className="text-red-500">{error.message}</Text>}
-          </View>
-        )}
+      <StyledTextInput
+        className="border border-gray-400 rounded-md w-full p-2 mb-4"
+        placeholder="Texto a hashear..."
+        value={text}
+        onChangeText={setText}
       />
 
-      <Controller
-        name="email"
-        control={control}
-        defaultValue=""
-        rules={{ required: "Email is required" }}
-        render={({ field: { onChange, value }, fieldState: { error } }) => (
-          <View className="mb-4">
-            <TextInput
-              className="border border-gray-300 rounded-lg p-2"
-              placeholder="Email"
-              value={value}
-              onChangeText={onChange}
-            />
-            {error && <Text className="text-red-500">{error.message}</Text>}
-          </View>
-        )}
-      />
+      <StyledButton
+        className="bg-blue-500 rounded-md p-3 mb-4"
+        onPress={encryptData}
+      >
+        <StyledText className="text-white text-center">Generar Hash</StyledText>
+      </StyledButton>
 
-      <Button title="Save Securely" onPress={handleSubmit(saveData)} />
-    </View>
+      {cipherText ? (
+        <StyledText className="mb-4 break-words">
+          Hash generado: {cipherText}
+        </StyledText>
+      ) : null}
+
+      <StyledButton
+        className="bg-green-500 rounded-md p-3 mb-4"
+        onPress={decryptData}
+      >
+        <StyledText className="text-white text-center">
+          Verificar Hash
+        </StyledText>
+      </StyledButton>
+    </AppContainer>
   );
 };
 
-export default FormEncrypt;
+export default BcryptComponent;

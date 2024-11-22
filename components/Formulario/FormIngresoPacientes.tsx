@@ -46,9 +46,13 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
   }, [id, reset]);
 
   const onSubmit = async (data: FormData) => {
-    actualizarPaciente(id, data);
+    if (id) {
+      actualizarPaciente(id, data);
+    }
+    agregarPaciente(data);
     reset();
     Alert.alert("Formulario enviado ( •̀ .̫ •́ )✧ ");
+    id = "";
     router.back();
   };
 
