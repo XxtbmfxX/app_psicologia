@@ -76,6 +76,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
+            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
             placeholder="Nombre"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -85,6 +86,31 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
       />
       {errors.nombre && (
         <Text className="text-red-500 mb-2">{errors.nombre.message}</Text>
+      )}
+
+      {/* Campo Apellido */}
+      <Controller
+        name="apellido"
+        control={control}
+        rules={{
+          minLength: {
+            value: 3,
+            message: "El apellido debe tener al menos 3 caracteres 😅",
+          },
+        }}
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            className="border p-2 mb-4 w-full"
+            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
+            placeholder="Apellido"
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+          />
+        )}
+      />
+      {errors.apellido && (
+        <Text className="text-red-500 mb-2">{errors.apellido.message}</Text>
       )}
 
       {/* Campo Teléfono */}
@@ -101,6 +127,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
+            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
             placeholder="Teléfono"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -114,30 +141,6 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         <Text className="text-red-500 mb-2">{errors.telefono.message}</Text>
       )}
 
-      {/* Campo Apellido */}
-      <Controller
-        name="apellido"
-        control={control}
-        rules={{
-          minLength: {
-            value: 3,
-            message: "El apellido debe tener al menos 3 caracteres 😅",
-          },
-        }}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            className="border p-2 mb-4 w-full"
-            placeholder="Apellido"
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-      />
-      {errors.apellido && (
-        <Text className="text-red-500 mb-2">{errors.apellido.message}</Text>
-      )}
-
       {/* Campo Rut */}
       <Controller
         name="rut"
@@ -149,6 +152,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
+            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
             placeholder="RUT"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -163,7 +167,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
       <CustomPressable
         title="Guardar Cambios"
         onPress={handleSubmit(onSubmit)}
-        className=" text-white w-3/4 p-2"
+        className=" text-white w-3/4 p-2 bg-blue-700"
       />
     </View>
   );

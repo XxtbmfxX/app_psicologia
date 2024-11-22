@@ -1,9 +1,10 @@
-import { StatusBar, View } from "react-native";
+import { StatusBar, View, Text } from "react-native";
 import { Link } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import ListaPacientes from "@/components/mostrar/ListaPacientes";
 import InputBusqueda from "@/components/InputBusqueda";
+
 
 export default function Index() {
   return (
@@ -14,7 +15,10 @@ export default function Index() {
         <Link href={"/profile"}>
           <FontAwesome5 name="user-circle" size={44} color="black" />
         </Link>
+        
       </View>
+      <Text className="text-2xl text-center my-5 ">Lista de Pacientes</Text>
+
       <View className="w-full">
         <InputBusqueda />
       </View>
