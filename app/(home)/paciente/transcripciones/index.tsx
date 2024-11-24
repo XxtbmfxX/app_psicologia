@@ -1,13 +1,16 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import ListaTranscripciones from '@/components/mostrar/ListaTranscripciones'
 
 type Props = {}
 
 const index = (props: Props) => {
   return (
-    <View>
-      <Text>index</Text>
-    </View>
+    <SafeAreaView>
+      <Text className='text-xl text-center my-5' >Transcripciones</Text>
+      <ListaTranscripciones/>
+    </SafeAreaView>
   )
 }
 

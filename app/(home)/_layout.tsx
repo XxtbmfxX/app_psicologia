@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { AudioProvider } from "@/context/AudioContext";
 import { PacientesProvider } from "@/context/PacienteContext";
 import { CitasProvider } from "@/context/CitasContext";
+import { SpeechToTextProvider } from "@/context/SpeechToTextContext";
 
 export default function HomeLayout() {
   const { user, loading } = useSession();
@@ -42,63 +43,65 @@ export default function HomeLayout() {
     <AudioProvider>
       <PacientesProvider>
         <CitasProvider>
-          <Tabs
-            screenOptions={{
-              tabBarActiveTintColor: "#125488",
-              headerShown: false,
-            }}
-          >
-            <Tabs.Screen
-              name="index"
-              options={{
-                title: "Pacientes",
-                tabBarIcon: ({ color }) => (
-                  <FontAwesome size={28} name="home" color={color} />
-                ),
+          <SpeechToTextProvider>
+            <Tabs
+              screenOptions={{
+                tabBarActiveTintColor: "#125488",
+                headerShown: false,
               }}
-            />
-
-            <Tabs.Screen
-              name="archivados"
-              options={{
-                title: "Archivados",
-                tabBarIcon: ({ color }) => (
-                  <FontAwesome size={28} name="archive" color={color} />
-                ),
-              }}
-            />
-            <Tabs.Screen
-              name="aniadir"
-              options={{
-                title: "Añadir",
-                tabBarIcon: ({ color }) => (
-                  <Ionicons name="person-add-sharp" size={24} color={color} />
-                ),
-              }}
-            />
-
-            <Tabs.Screen
-              name="citas/index"
-              options={{
-                title: "Citas",
-                tabBarIcon: ({ color }) => (
-                  <Fontisto name="date" size={24} color={color} />
-                ),
-              }}
-            />
-
-            {/* IGNORAR CITAS */}
-
-            {listaDeIgnorados.map((ruta) => (
+            >
               <Tabs.Screen
-                name={ruta}
+                name="index"
                 options={{
-                  href: null,
+                  title: "Pacientes",
+                  tabBarIcon: ({ color }) => (
+                    <FontAwesome size={28} name="home" color={color} />
+                  ),
                 }}
-                key={ruta}
               />
-            ))}
-          </Tabs>
+
+              <Tabs.Screen
+                name="archivados"
+                options={{
+                  title: "Archivados",
+                  tabBarIcon: ({ color }) => (
+                    <FontAwesome size={28} name="archive" color={color} />
+                  ),
+                }}
+              />
+              <Tabs.Screen
+                name="aniadir"
+                options={{
+                  title: "Añadir",
+                  tabBarIcon: ({ color }) => (
+                    <Ionicons name="person-add-sharp" size={24} color={color} />
+                  ),
+                }}
+              />
+
+              <Tabs.Screen
+                name="citas/index"
+                options={{
+                  title: "Citas",
+                  tabBarIcon: ({ color }) => (
+                    <Fontisto name="date" size={24} color={color} />
+                  ),
+                }}
+              />
+
+              {/* IGNORAR CITAS */}
+
+              {listaDeIgnorados.map((ruta) => (
+                <Tabs.Screen
+                  name={ruta}
+                  options={{
+                    href: null,
+                  }}
+                  key={ruta}
+                />
+              ))}
+            </Tabs>
+          </SpeechToTextProvider>
         </CitasProvider>
       </PacientesProvider>
     </AudioProvider>

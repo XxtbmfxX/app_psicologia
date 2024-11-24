@@ -3,12 +3,18 @@ import { View, Text, Alert, TouchableOpacity, ActivityIndicator } from "react-na
 import { Audio } from "expo-av";
 import { useAudioContext } from "@/context/AudioContext";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useSpeechToText } from "@/context/SpeechToTextContext";
+import { router } from "expo-router";
 
 type Props = {
   audio: { uri: string; name: string };
 };
 
 const FilaAudio = ({ audio }: Props) => {
+
+  const { transcribeAudio } = useSpeechToText();
+
+
   const { deleteAudio } = useAudioContext();
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -82,6 +88,34 @@ const FilaAudio = ({ audio }: Props) => {
     );
   };
 
+
+  // Transcribir audio
+  const handleTranscribe = async () => {
+    setIsLoading(true);
+
+    Alert.alert(
+      "Transcrición",
+      `¿Desea transcribir el audio "${audio.name}"?`,
+      [
+        { text: "Cancelar", style: "cancel" },
+        { text: isLoading ? "Un momentito (⌐■_■) ..." : "Transcribir", onPress: async () => {
+          try {
+            const transcription = await transcribeAudio(audio.uri);
+            if (transcription) {
+              Alert.alert("Transcripción:", transcription);
+            }
+            router.navigate(`/(home)/paciente/transcripciones/${audio.name}`);
+            
+          } finally {
+            setIsLoading(false);
+          }
+        } },
+      ]
+    );
+
+   
+  };
+
   return (
     <View className="my-5 p-4 rounded-lg border-2">
       <Text className="my2">{audio.name}</Text>
@@ -109,6 +143,12 @@ const FilaAudio = ({ audio }: Props) => {
         <TouchableOpacity onPress={confirmDelete}>
           <MaterialIcons name="delete" size={40} color="red" />
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleTranscribe}>
+          <MaterialIcons name="translate" size={40} color="orange" />
+        </TouchableOpacity>
+
+
       </View>
     </View>
   );
