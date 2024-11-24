@@ -24,7 +24,7 @@ const ListaPacientes = () => {
           entering={FadeIn}
           exiting={FadeOut}
         >
-          <FilaPaciente id={item.id} nombre={item.nombre} />
+          <FilaPaciente id={item.id} nombre={item.nombre} apellido={item.apellido} rut={item.rut}/>
         </Animated.View>
       )}
       className=" w-full px-4"
