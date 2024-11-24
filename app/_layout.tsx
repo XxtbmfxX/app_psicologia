@@ -1,12 +1,12 @@
 import { SessionProvider } from "@/context/AuthContext";
-import { CitasProvider } from "@/context/CitasContext";
-import { PacientesProvider } from "@/context/PacienteContext";
-import { Slot, Stack } from "expo-router";
+import { Slot} from "expo-router";
 
-export default function RootLayout() {
-  return (
-    <SessionProvider>
-      <Slot />
-    </SessionProvider>
-  );
-}
+export { default } from '@/.storybook';
+
+// export default function RootLayout() {
+//   return (
+//     <SessionProvider>
+//       <Slot />
+//     </SessionProvider>
+//   );
+// }
