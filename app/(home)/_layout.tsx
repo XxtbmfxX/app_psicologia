@@ -26,6 +26,18 @@ export default function HomeLayout() {
     return <Redirect href="/" />; // También se puede usar un <Redirect /> si lo prefieres
   }
 
+  const listaDeIgnorados = [
+    "citas/aniadirCita",
+    "citas/modificarCita/[idCita]",
+    "citas/[id]",
+    "profile",
+    "paciente/[id]",
+    "paciente/modificarPaciente/[idPaciente]",
+    "paciente/grabaciones/[nombrePaciente]",
+    "paciente/transcripciones/index",
+    "paciente/transcripciones/[nombrePaciente]",
+  ];
+
   return (
     <AudioProvider>
       <PacientesProvider>
@@ -76,59 +88,16 @@ export default function HomeLayout() {
             />
 
             {/* IGNORAR CITAS */}
-            <Tabs.Screen
-              name="citas/aniadirCita"
-              options={{
-                href: null,
-              }}
-            />
-            <Tabs.Screen
-              name="citas/modificarCita/[idCita]"
-              options={{
-                href: null,
-              }}
-            />
-            <Tabs.Screen
-              name="citas/[id]"
-              options={{
-                href: null,
-              }}
-            />
 
-            {/* IGNORAR PERFIL */}
-
-            <Tabs.Screen
-              name="profile"
-              options={{
-                href: null,
-              }}
-            />
-            {/* IGNORAR PACIENTES */}
-            <Tabs.Screen
-              name="paciente/[id]"
-              options={{
-                href: null,
-              }}
-            />
-            <Tabs.Screen
-              name="paciente/grabaciones/[nombrePaciente]"
-              options={{
-                href: null,
-              }}
-            />
-
-            <Tabs.Screen
-              name="paciente/transcipciones"
-              options={{
-                href: null,
-              }}
-            />
-            <Tabs.Screen
-              name="paciente/modificarPaciente/[idPaciente]"
-              options={{
-                href: null,
-              }}
-            />
+            {listaDeIgnorados.map((ruta) => (
+              <Tabs.Screen
+                name={ruta}
+                options={{
+                  href: null,
+                }}
+                key={ruta}
+              />
+            ))}
           </Tabs>
         </CitasProvider>
       </PacientesProvider>

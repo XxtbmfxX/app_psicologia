@@ -15,6 +15,10 @@ const FichaPaciente = ({ paciente }: Props) => {
     router.navigate(`/(home)/paciente/grabaciones/${paciente.nombre}`);
   };
 
+  const verTranscripciones = () => {
+    router.navigate(`/(home)/paciente/transcripciones/${paciente.nombre}`);
+  };
+
   const handleModificarDatos = (pacienteId: string) => {
     router.push(`/(home)/paciente/modificarPaciente/${pacienteId}`);
   };
@@ -53,9 +57,16 @@ const FichaPaciente = ({ paciente }: Props) => {
         <View className="my-5">
           <Pressable
             onPress={verGrabaciones}
-            className="bg-purple-600 p-4 rounded-lg mb-3 shadow-md"
+            className="bg-purple-500 p-4 rounded-lg mb-3 shadow-md"
           >
             <Text className="text-white text-center">Ver Grabaciones</Text>
+          </Pressable>
+
+          <Pressable
+            onPress={verTranscripciones}
+            className="bg-purple-600 p-4 rounded-lg mb-3 shadow-md"
+          >
+            <Text className="text-white text-center">Ver Transcripciones</Text>
           </Pressable>
 
           <Pressable
