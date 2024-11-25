@@ -19,7 +19,7 @@ const ListaArchivados = (props: Props) => {
       keyExtractor={(item) => item.id}
       className='bg-gray-200 rounded-lg p-5 w-full'
       renderItem={({ item }) => (
-        <FilaArchivado id={item.id} nombre={item.nombre} />
+        <FilaArchivado id={item.id} nombre={item.nombre} apellido={item.apellido} rut={item.rut} />
       )}
     />
   );

@@ -6,9 +6,11 @@ import { usePacientes } from "@/context/PacienteContext";
 type Props = {
   id: string;
   nombre: string;
+  apellido: string;
+  rut:  string;
 };
 
-const FilaArchivado = ({ nombre, id }: Props) => {
+const FilaArchivado = ({ nombre, id, apellido, rut }: Props) => {
   const { devolverPacienteArchivado } = usePacientes();
   const [loading, setloading] = useState(false);
 
@@ -24,7 +26,8 @@ const FilaArchivado = ({ nombre, id }: Props) => {
   return (
     <View className="bg-gray-50 rounded-lg p-2 my-1 flex flex-row items-center justify-around ">
       <View className="">
-        <Text className="text-lg">{nombre}</Text>
+        <Text className="text-lg">{nombre} {apellido}</Text>
+        <Text className="text-sm">{rut}</Text>
       </View>
 
       {loading ? (
