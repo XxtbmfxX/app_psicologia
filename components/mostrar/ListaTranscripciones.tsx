@@ -1,39 +1,32 @@
 import React from "react";
-import { useAudioContext } from "@/context/AudioContext";
-import FilaAudio from "./FilaAudio";
 import { FlatList, Text, View } from "react-native";
 import FilaTranscripciones from "./FilaTranscripciones";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
 
-const ListaTranscripciones = ({ nombreAudio }: { nombreAudio?: string }) => {
+const ListaTranscripciones = ({
+  nombrePaciente,
+}: {
+  nombrePaciente?: string;
+}) => {
   const { transcripciones } = useSpeechToText();
 
-  // Filtrar los audios que empiezan con el nombreAudio
-//   const filteredAudioFiles = transcripciones.filter((trasncripcion) =>
-//     trasncripcion.name.startsWith(`${nombreAudio}_`)
-//   );
+  // // Filtrar los audios que empiezan con el nombreAudio
+  let filteredTranscripcion = [{ title: "prueba", contenido: "(⌐■_■)" }];
 
-  //   if (filteredAudioFiles.length === 0) {
-  //     return (
-  //       <View className="flex-1 justify-center my-5">
-  //         <Text className="text-xl text-center font-semibold ">
-  //           No hay audios para {nombreAudio}.
-  //         </Text>
-  //       </View>
-  //     );
-  //   }
-
-
-  if (transcripciones.length == 0) {
-    return <Text>No hay transcripciones (#｀-_ゝ-)</Text>
+  if (nombrePaciente) {
+    filteredTranscripcion = transcripciones.filter((transcripcion) => {
+      return transcripcion.titulo?.includes(nombrePaciente);
+    });
   }
+
+  // Agregar para cuando no hay transcripciones
 
   return (
     <FlatList
-      data={transcripciones}
-      keyExtractor={(item) => item.uri}
+      data={nombrePaciente ? filteredTranscripcion : transcripciones}
+      keyExtractor={(item) => item.titulo}
       renderItem={({ item }) => <FilaTranscripciones transcripcion={item} />}
-      className="p-5"
+      className="px-5 mb-20"
     />
   );
 };

@@ -23,3 +23,5 @@ type Cita = {
   nombre: string;
   fechaYHora: Timestamp;
 };
+
+type Transcripcion = { contenido: string; titulo: string };

@@ -8,11 +8,12 @@ import {
 } from "firebase/firestore";
 import { db } from "@/firebaseConfig";
 import { Alert } from "react-native";
+import { Transcripcion } from "@/types/types";
 
 // type AudioFile = { uri: string; name: string; transcription?: string };
 
 type SpeechToTextContextType = {
-  transcripciones: any[];
+  transcripciones: Transcripcion[];
 
   transcribeAudio: (uri: string) => Promise<string | undefined>;
 };
