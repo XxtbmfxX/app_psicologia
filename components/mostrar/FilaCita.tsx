@@ -25,7 +25,7 @@ const FilaCita = ({ cita }: Props) => {
       className="bg-blue-600 rounded-lg my-1 p-4 shadow-md"
       activeOpacity={0.8}
     >
-      <Text className="text-white font-bold text-xl">{cita.nombre}</Text>
+      <Text className="text-white font-bold text-xl">{cita.nombre} {cita.apellido}</Text>
 
       <Text className="text-white text-right text-lg">
         {formattedDate} - {formattedTime}{" "}

@@ -21,6 +21,7 @@ type Cita = {
   id: string;
   idPaciente: string;
   nombre: string;
+  apellido: string;
   fechaYHora: Timestamp;
 };
 

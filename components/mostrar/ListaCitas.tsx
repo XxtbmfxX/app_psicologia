@@ -32,6 +32,7 @@ const ListaCitas = () => {
         )}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 20 }}
+        className="mb-24"
       />
     </View>
   );

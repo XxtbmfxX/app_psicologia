@@ -19,6 +19,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
 
   const [pacienteId, setPacienteId] = useState("");
   const [pacienteNombre, setPacienteNombre] = useState("");
+  const [pacienteApellido, setPacienteApellido] = useState("");
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -32,6 +33,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
         if (cita) {
           setPacienteId(cita.idPaciente);
           setPacienteNombre(cita.nombre);
+          setPacienteApellido(cita.apellido);
           setDate(cita.fechaYHora.toDate());
         }
       }
@@ -43,6 +45,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
     if (pacienteId && pacientes.length > 0) {
       const paciente = pacientes.find((p) => p.id === pacienteId);
       setPacienteNombre(paciente ? paciente.nombre : "");
+      setPacienteApellido(paciente ? paciente.apellido : "");
     }
   }, [pacienteId, pacientes]);
 
@@ -65,6 +68,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
     const citaData: Cita = {
       idPaciente: pacienteId,
       nombre: pacienteNombre,
+      apellido: pacienteApellido,
       fechaYHora: date,
       ...(citaId ? { id: citaId } : {}), // Añadir ID si es edición
     };
@@ -89,6 +93,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
         onValueChange={(itemValue, index) => {
           setPacienteId(itemValue);
           setPacienteNombre(pacientes[index].nombre);
+          setPacienteApellido(pacientes[index].apellido);
           setError(""); // Borrar el error al seleccionar un paciente
         }}
         style={{ backgroundColor: "white" }}
