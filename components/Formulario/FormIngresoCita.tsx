@@ -96,7 +96,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
         {pacientes.map((paciente: Paciente) => (
           <Picker.Item
             key={paciente.id}
-            label={paciente.nombre}
+            label={paciente.nombre + " " + paciente.apellido}
             value={paciente.id}
           />
         ))}
