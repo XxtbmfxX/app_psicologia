@@ -97,14 +97,16 @@ const FilaAudio = ({ audio }: Props) => {
       "Transcrición",
       `¿Desea transcribir el audio "${audio.name}"?`,
       [
-        { text: "Cancelar", style: "cancel" },
+        { text: "Cancelar", style: "cancel", onPress: () => setIsLoading(false) },
         { text: isLoading ? "Un momentito (⌐■_■) ..." : "Transcribir", onPress: async () => {
           try {
-            const transcription = await transcribeAudio(audio.uri);
+            const transcription = await transcribeAudio(audio.uri, audio.name);
+
             if (transcription) {
-              Alert.alert("Transcripción:", transcription);
+              Alert.alert("Transcripción Hecha");
             }
-            router.navigate(`/(home)/paciente/transcripciones/${audio.name}`);
+
+            // router.navigate(`/(home)/paciente/transcripciones/${audio.name}`);
             
           } finally {
             setIsLoading(false);

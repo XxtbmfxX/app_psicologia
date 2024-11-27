@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, TextInput, View } from "react-native";
+import { Button, View } from "react-native";
 import { Audio } from "expo-av";
 import { useAudioContext } from "@/context/AudioContext";
 

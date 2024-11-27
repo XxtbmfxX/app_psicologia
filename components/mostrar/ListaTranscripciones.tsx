@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, Text, View } from "react-native";
 import FilaTranscripciones from "./FilaTranscripciones";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
+import { Transcripcion } from "@/types/types";
 
 const ListaTranscripciones = ({
   nombrePaciente,
@@ -11,7 +12,7 @@ const ListaTranscripciones = ({
   const { transcripciones } = useSpeechToText();
 
   // // Filtrar los audios que empiezan con el nombreAudio
-  let filteredTranscripcion = [{ title: "prueba", contenido: "(⌐■_■)" }];
+  let filteredTranscripcion: Transcripcion[] = [{ titulo: "prueba", contenido: "(⌐■_■)" }];
 
   if (nombrePaciente) {
     filteredTranscripcion = transcripciones.filter((transcripcion) => {
