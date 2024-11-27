@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, Alert, TouchableOpacity, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Alert,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
 import { Audio } from "expo-av";
 import { useAudioContext } from "@/context/AudioContext";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -11,9 +17,7 @@ type Props = {
 };
 
 const FilaAudio = ({ audio }: Props) => {
-
   const { transcribeAudio } = useSpeechToText();
-
 
   const { deleteAudio } = useAudioContext();
   const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -25,7 +29,9 @@ const FilaAudio = ({ audio }: Props) => {
     try {
       setIsLoading(true); // Iniciar el indicador
       if (!sound) {
-        const { sound: newSound } = await Audio.Sound.createAsync({ uri: audio.uri });
+        const { sound: newSound } = await Audio.Sound.createAsync({
+          uri: audio.uri,
+        });
         setSound(newSound);
         await newSound.playAsync();
         setIsPlaying(true);
@@ -88,7 +94,6 @@ const FilaAudio = ({ audio }: Props) => {
     );
   };
 
-
   // Transcribir audio
   const handleTranscribe = async () => {
     setIsLoading(true);
@@ -97,25 +102,32 @@ const FilaAudio = ({ audio }: Props) => {
       "Transcrición",
       `¿Desea transcribir el audio "${audio.name}"?`,
       [
-        { text: "Cancelar", style: "cancel", onPress: () => setIsLoading(false) },
-        { text: isLoading ? "Un momentito (⌐■_■) ..." : "Transcribir", onPress: async () => {
-          try {
-            const transcription = await transcribeAudio(audio.uri, audio.name);
+        {
+          text: "Cancelar",
+          style: "cancel",
+          onPress: () => setIsLoading(false),
+        },
+        {
+          text: isLoading ? "Un momentito (⌐■_■) ..." : "Transcribir",
+          onPress: async () => {
+            try {
+              const transcripcion = await transcribeAudio(
+                audio.name,
+                audio.uri
+              );
 
-            if (transcription) {
-              Alert.alert("Transcripción Hecha");
+              if (transcripcion) {
+                Alert.alert("Transcripción Hecha: ", transcripcion);
+              }
+
+              // router.navigate(`/(home)/paciente/transcripciones/${audio.name}`);
+            } finally {
+              setIsLoading(false);
             }
-
-            // router.navigate(`/(home)/paciente/transcripciones/${audio.name}`);
-            
-          } finally {
-            setIsLoading(false);
-          }
-        } },
+          },
+        },
       ]
     );
-
-   
   };
 
   return (
@@ -128,7 +140,11 @@ const FilaAudio = ({ audio }: Props) => {
           <ActivityIndicator size="large" color="green" />
         ) : isPlaying ? (
           <TouchableOpacity onPress={pauseAudio}>
-            <MaterialIcons name="pause-circle-outline" size={40} color="green" />
+            <MaterialIcons
+              name="pause-circle-outline"
+              size={40}
+              color="green"
+            />
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={playAudio}>
@@ -149,8 +165,6 @@ const FilaAudio = ({ audio }: Props) => {
         <TouchableOpacity onPress={handleTranscribe}>
           <MaterialIcons name="translate" size={40} color="orange" />
         </TouchableOpacity>
-
-
       </View>
     </View>
   );

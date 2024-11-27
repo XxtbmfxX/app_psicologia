@@ -15,7 +15,7 @@ import { Transcripcion } from "@/types/types";
 type SpeechToTextContextType = {
   transcripciones: Transcripcion[];
 
-  transcribeAudio: (uri: string) => Promise<string | undefined>;
+  transcribeAudio: (titulo:string, uri: string) => Promise<string | undefined>;
 };
 
 const SpeechToTextContext = createContext<SpeechToTextContextType | undefined>(
@@ -51,10 +51,10 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
 
  
   // Transcribir audio
-  const transcribeAudio = async (uri: string) => {
+  const transcribeAudio = async (titulo:string, uri: string) => {
 
     console.log("En procesos （＞人＜；）")
-    return "en procesos"
+    return `${titulo}: ${uri}` 
     // try {
     //   const response = await fetch("https://api.speech-to-text.com/v1/recognize", {
     //     method: "POST",
