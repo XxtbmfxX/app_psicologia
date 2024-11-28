@@ -5,11 +5,11 @@ import * as FileSystem from "expo-file-system";
 
 type SpeechToTextContextType = {
   transcripciones: Transcripcion[];
-  obtenerTranscripcion: (id: string) => Transcripcion | undefined;
   eliminarTranscripcion: (id: string) => Promise<void>;
   subirAudio: (audioFile: string) => Promise<void>;
   cargarTranscripciones: () => Promise<void>;
-  obtenerTranscripcionAPI: (id: string) => Promise<Transcripcion | undefined>;
+  obtenerTranscripcionAPI: (id: string) => Promise<string | null>;
+
   cargando: boolean;
   error: string | null;
 };
@@ -49,11 +49,28 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
   // Obtener una transcripción por ID desde la API
   const obtenerTranscripcionAPI = async (
     id: string
-  ): Promise<Transcripcion | undefined> => {
-    const response = await axios.get(`${API_BASE_URL}/transcript/${id}`, {
-      headers: { Authorization: API_KEY },
-    });
-    return response.data;
+  ): Promise<string | null> => {
+    try {
+      setCargando(true); // Muestra un indicador de carga
+      setError(null);
+
+      const response = await axios.get(`${API_BASE_URL}/transcript/${id}`, {
+        headers: { Authorization: API_KEY },
+      });
+
+      if (response.data.status === "completed") {
+        return response.data.text;
+      } else {
+        setError("La transcripción aún no está lista o falló.");
+        return null;
+      }
+    } catch (error: any) {
+      setError("No se pudo obtener la transcripción. Intenta más tarde.");
+      console.error("Error al obtener transcripción:", error.message);
+      return null;
+    } finally {
+      setCargando(false); // Oculta el indicador de carga
+    }
   };
 
   const agregarTranscripcion = (transcripcion: Transcripcion) => {
@@ -67,37 +84,52 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   const verificarEstado = async (id: string) => {
-    try {
-      const estadoResponse = await axios.get(
-        `${API_BASE_URL}/transcript/${id}`,
-        {
-          headers: {
-            Authorization: API_KEY,
-          },
-        }
-      );
+    const MAX_REINTENTOS = 10;
+    let intentos = 0;
 
-      const { status, text } = estadoResponse.data;
-
-      actualizarEstadoTranscripcion(id, status);
-
-      // Si la transcripción está completa, agrega el texto transcrito
-      if (status === "completed") {
-        setTranscripciones((prev) =>
-          prev.map((t) => (t.id === id ? { ...t, text } : t))
+    const interval = setInterval(async () => {
+      try {
+        const estadoResponse = await axios.get(
+          `${API_BASE_URL}/transcript/${id}`,
+          { headers: { Authorization: API_KEY } }
         );
-      }
 
-      if (status !== "completed" && status !== "failed") {
-        setTimeout(() => verificarEstado(id), 5000); // Reintentar después de 5 segundos
+        const { status, text } = estadoResponse.data;
+
+        actualizarEstadoTranscripcion(id, status);
+
+        if (status === "completed") {
+          setTranscripciones((prev) =>
+            prev.map((t) => (t.id === id ? { ...t, text } : t))
+          );
+          clearInterval(interval);
+        } else if (status === "failed" || intentos >= MAX_REINTENTOS) {
+          setError("No se pudo completar la transcripción.");
+          clearInterval(interval);
+        }
+
+        intentos++;
+      } catch (error) {
+        console.error("Error al verificar estado:", error);
+        clearInterval(interval);
       }
-    } catch (error) {
-      console.error("Error al verificar el estado:", error);
+    }, 5000); // Intervalo de 5 segundos
+  };
+
+  const validarAudio = (audioFileUri: string): boolean => {
+    const extension = audioFileUri.split(".").pop()?.toLowerCase();
+    const formatosPermitidos = ["mp3", "wav", "m4a"];
+
+    if (!formatosPermitidos.includes(extension || "")) {
+      setError("El formato del archivo no es válido. Usa MP3, WAV o M4A.");
+      return false;
     }
+    return true;
   };
 
   // Subir un archivo de audio para transcribir
   const subirAudio = async (audioFileUri: string) => {
+    if (!validarAudio(audioFileUri)) return;
     try {
       const uploadResponse = await FileSystem.uploadAsync(
         `${API_BASE_URL}/upload`,
@@ -116,7 +148,14 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
       // Solicitar la transcripción
       const transcriptionResponse = await axios.post(
         `${API_BASE_URL}/transcript`,
-        { audio_url: audioUrl },
+        {
+          audio_url: audioUrl,
+          language_code: "es",
+          punctuate: true,
+          format_text: true,
+          boost_param: "high",
+          speaker_labels: true,
+        },
         {
           headers: {
             Authorization: API_KEY,
@@ -166,7 +205,6 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
         transcripciones,
         cargando,
         error,
-        obtenerTranscripcion,
         eliminarTranscripcion,
         subirAudio,
         cargarTranscripciones,

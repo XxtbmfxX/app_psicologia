@@ -9,10 +9,7 @@ interface DropdownArrowProps {
 
 const DropdownArrow: React.FC<DropdownArrowProps> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [contentHeight, setContentHeight] = useState(0); // Guardar la altura dinámica del contenido
   const [animation] = useState(new Animated.Value(0));
-
-  const [currentHeight, setcurrentHeight] = useState("0px");
 
   const toggleDropdown = () => {
     setIsOpen((prev) => !prev);
