@@ -10,14 +10,13 @@ import { Audio } from "expo-av";
 import { useAudioContext } from "@/context/AudioContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
-import { router } from "expo-router";
 
 type Props = {
   audio: { uri: string; name: string };
 };
 
 const FilaAudio = ({ audio }: Props) => {
-  const { transcribeAudio } = useSpeechToText();
+  const { subirAudio, cargando, error } = useSpeechToText();
 
   const { deleteAudio } = useAudioContext();
   const [sound, setSound] = useState<Audio.Sound | null>(null);
@@ -94,40 +93,36 @@ const FilaAudio = ({ audio }: Props) => {
     );
   };
 
-  // Transcribir audio
   const handleTranscribe = async () => {
-    setIsLoading(true);
-
-    Alert.alert(
-      "Transcrición",
-      `¿Desea transcribir el audio "${audio.name}"?`,
-      [
-        {
-          text: "Cancelar",
-          style: "cancel",
-          onPress: () => setIsLoading(false),
-        },
-        {
-          text: isLoading ? "Un momentito (⌐■_■) ..." : "Transcribir",
-          onPress: async () => {
-            try {
-              const transcripcion = await transcribeAudio(
-                audio.name,
-                audio.uri
-              );
-
-              if (transcripcion) {
-                Alert.alert("Transcripción Hecha: ", transcripcion);
-              }
-
-              // router.navigate(`/(home)/paciente/transcripciones/${audio.name}`);
-            } finally {
-              setIsLoading(false);
-            }
+    try {
+      Alert.alert(
+        "Transcripción",
+        `¿Desea transcribir el audio "${audio.name}"?`,
+        [
+          {
+            text: "Cancelar",
+            style: "cancel",
           },
-        },
-      ]
-    );
+          {
+            text: cargando ? "Procesando..." : "Transcribir",
+            onPress: async () => {
+              try {
+                const result = await subirAudio(audio.uri);
+                
+              } catch (e) {
+                Alert.alert("Error", error || "Algo salió mal.");
+              }
+            },
+          },
+        ]
+      );
+    } catch (error) {
+      console.error("Error al transcribir:", error);
+      Alert.alert(
+        "Error",
+        "Hubo un problema al intentar transcribir el archivo."
+      );
+    }
   };
 
   return (

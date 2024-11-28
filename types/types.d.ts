@@ -25,4 +25,13 @@ type Cita = {
   fechaYHora: Timestamp;
 };
 
-type Transcripcion = { titulo: string; contenido: string };
+type Transcripcion = {
+  id: string;
+  resource_url: string;
+  status: string;
+  created?: string;
+  audio_url?: string;
+  completed?: string;
+  error?: string;
+  text?: string
+};

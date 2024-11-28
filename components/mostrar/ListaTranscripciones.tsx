@@ -1,31 +1,19 @@
 import React from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList } from "react-native";
 import FilaTranscripciones from "./FilaTranscripciones";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
-import { Transcripcion } from "@/types/types";
 
 const ListaTranscripciones = ({
-  nombrePaciente,
+  nombrePaciente
 }: {
   nombrePaciente?: string;
 }) => {
   const { transcripciones } = useSpeechToText();
 
-  // // Filtrar los audios que empiezan con el nombreAudio
-  let filteredTranscripcion: Transcripcion[] = [{ titulo: "prueba", contenido: "(⌐■_■)" }];
-
-  if (nombrePaciente) {
-    filteredTranscripcion = transcripciones.filter((transcripcion) => {
-      return transcripcion.titulo?.includes(nombrePaciente);
-    });
-  }
-
-  // Agregar para cuando no hay transcripciones
-
   return (
     <FlatList
-      data={nombrePaciente ? filteredTranscripcion : transcripciones}
-      keyExtractor={(item) => item.titulo}
+      data={transcripciones}
+      keyExtractor={(item) => item.id}
       renderItem={({ item }) => <FilaTranscripciones transcripcion={item} />}
       className="px-5 mb-20"
     />
