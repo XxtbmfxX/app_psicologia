@@ -10,6 +10,7 @@ import { Audio } from "expo-av";
 import { useAudioContext } from "@/context/AudioContext";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
+import { router } from "expo-router";
 
 type Props = {
   audio: { uri: string; name: string };
@@ -107,8 +108,8 @@ const FilaAudio = ({ audio }: Props) => {
             text: cargando ? "Procesando..." : "Transcribir",
             onPress: async () => {
               try {
-                const result = await subirAudio(audio.uri);
-                
+                await subirAudio(audio.uri);
+                router.push("/(home)/paciente/transcripciones")
               } catch (e) {
                 Alert.alert("Error", error || "Algo salió mal.");
               }

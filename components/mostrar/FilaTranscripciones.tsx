@@ -51,16 +51,22 @@ const FilaTranscripciones = ({ transcripcion }: Props) => {
     setCargandoTexto(false);
   };
 
+  const date = new Date(transcripcion.created || ""); // Convierte el string ISO en un objeto Date
+
+  const day = date.getDate().toString().padStart(2, "0"); // Día (con cero inicial)
+  const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Mes (ajustando porque getMonth() devuelve de 0 a 11)
+  const year = date.getFullYear(); // Año completo
+  const hours = date.getHours().toString().padStart(2, "0"); // Hora (con cero inicial)
+  const minutes = date.getMinutes().toString().padStart(2, "0"); // Minutos (con cero inicial)
+  const formattedDate = `${day}/${month}/${year} - ${hours}:${minutes}`;
+
   return (
     <View className="my-5 p-4 rounded-lg border-2">
-      <DropDownArrow title={transcripcion.created || ""}>
+      <DropDownArrow title={formattedDate || ""}>
         <Text className={`my-2 ${getColorByStatus(transcripcion.status)}`}>
           Estado: {transcripcion.status}
         </Text>
-        <CustomPressable
-          title="Traer Transcripción"
-          onPress={handleGetTranscripcion}
-        />
+
         {texto ? (
           <Text className="my-2 text-gray-800">{texto}</Text>
         ) : (

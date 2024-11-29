@@ -40,10 +40,13 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
 
   // Cargar todas las transcripciones desde la API
   const cargarTranscripciones = async () => {
+    console.log("cargando...");
+
     const response = await axios.get(`${API_BASE_URL}/transcript`, {
       headers: { Authorization: API_KEY },
     });
     setTranscripciones(response.data.transcripts); // Asumiendo que el array de transcripciones está en `response.data`
+    console.log("cargado");
   };
 
   // Obtener una transcripción por ID desde la API

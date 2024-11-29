@@ -10,6 +10,14 @@
         "buildType": "apk"
       }
     },
-    "production": {}
+    "production": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "ASSEMBLYAI_API_KEY": "@env.ASSEMBLYAI_API_KEY"
+      }
+    }
   }
 }

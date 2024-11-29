@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { FlatList } from "react-native";
 import FilaTranscripciones from "./FilaTranscripciones";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
 
 const ListaTranscripciones = ({
-  nombrePaciente
+  nombrePaciente,
 }: {
   nombrePaciente?: string;
 }) => {
-  const { transcripciones } = useSpeechToText();
+  const { transcripciones, cargarTranscripciones } = useSpeechToText();
+
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+    cargarTranscripciones();
+    setRefreshing(false);
+  }, []);
 
   return (
     <FlatList
@@ -16,6 +24,8 @@ const ListaTranscripciones = ({
       keyExtractor={(item) => item.id}
       renderItem={({ item }) => <FilaTranscripciones transcripcion={item} />}
       className="px-5 mb-20"
+      refreshing={refreshing}
+      onRefresh={onRefresh}
     />
   );
 };
