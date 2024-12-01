@@ -2,6 +2,23 @@ import React, { useState } from "react";
 import { Button, View } from "react-native";
 import { Audio } from "expo-av";
 import { useAudioContext } from "@/context/AudioContext";
+/**
+ * Componente para grabar audio con Expo Audio.
+ *
+ * Función principal:
+ * - Permite iniciar y detener grabaciones de audio.
+ * - Guarda las grabaciones usando un contexto de audio (`AudioContext`).
+ * - Asigna un nombre a las grabaciones basado en el nombre del paciente y la fecha actual.
+ *
+ * Dependencias externas:
+ * - `Audio` de `expo-av`: Manejo de grabaciones de audio (https://docs.expo.dev/versions/latest/sdk/audio/).
+ * - `useAudioContext`: Contexto para gestionar y almacenar audios en la aplicación (ver documentación del contexto).
+ *
+ * Props:
+ * - `nombrePaciente` (opcional): Nombre del paciente asociado con la grabación. Por defecto, `"pedro"`.
+ *
+ * @component
+ */
 
 const GrabarAudio = ({ nombrePaciente = "pedro" }: { nombrePaciente?: string }) => {
   const { addAudio } = useAudioContext();

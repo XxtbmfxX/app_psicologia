@@ -3,10 +3,20 @@ import { View, Text, Alert, SafeAreaView } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { useCitas } from "@/context/CitasContext";
 import CustomPressable from "../common/CustomPressable";
-
+/**
+ * Componente que muestra los detalles de una cita, incluyendo la fecha, hora y nombre.
+ * También permite eliminar la cita o modificarla.
+ *
+ * @returns {JSX.Element} - Un componente con los detalles de la cita y botones para eliminarla o modificarla.
+ *
+ * @throws {Error} - Si la cita no se encuentra, muestra un mensaje indicando que la cita no fue encontrada.
+ *
+ * @example
+ * <DatosCita />
+ */
 const DatosCita = () => {
   const { id } = useLocalSearchParams();
-  const { citas, deleteCita, moverCita } = useCitas();
+  const { citas, deleteCita } = useCitas();
 
   const cita = citas.find((c) => c.id === id);
 
@@ -32,16 +42,6 @@ const DatosCita = () => {
     router.replace("/citas");
   };
 
-  // const handleMoverCita = async () => {
-  //   if (!cita.id) return;
-  //   try {
-  //     await moverCita(cita.id); // Agregar a la nueva colección
-  //     Alert.alert("Cita hecha 😊");
-  //     router.replace("/citas");
-  //   } catch (error) {
-  //     Alert.alert("Error al mover la cita ☠️");
-  //   }
-  // };
   if (cita === undefined) {
     return <Text>Cita no encontrada</Text>;
   }

@@ -1,14 +1,16 @@
 import { useSession } from "@/context/AuthContext";
-import {
-  View,
-  Text,
-  Button,
-  SafeAreaView,
-  ActivityIndicator,
-} from "react-native";
+import { Text, SafeAreaView, ActivityIndicator } from "react-native";
 import CustomPressable from "../common/CustomPressable";
-import { Redirect, router } from "expo-router";
-
+import { Redirect } from "expo-router";
+/**
+ * Componente que muestra la información del usuario y permite cerrar sesión.
+ *
+ * Este componente depende de `AuthContext` para obtener el estado de sesión (usuario y carga).
+ * Muestra un mensaje de bienvenida con el correo electrónico del usuario y un botón para cerrar sesión.
+ * Mientras se carga la sesión, se muestra un indicador de carga.
+ *
+ * @returns React.JSX.Element El perfil del usuario con la opción de cerrar sesión.
+ */
 export default function PerfilUsuario() {
   const { logout, user, loading } = useSession();
 

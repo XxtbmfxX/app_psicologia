@@ -1,6 +1,24 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 import { usePacientes } from "@/context/PacienteContext";
+/**
+ * Campo de entrada para buscar pacientes.
+ *
+ * Función principal:
+ * - Permite al usuario escribir un término de búsqueda.
+ * - Actualiza un filtro de búsqueda en el contexto de pacientes (`PacienteContext`).
+ *
+ * Dependencias externas:
+ * - `usePacientes`: Contexto para gestionar pacientes y sus filtros de búsqueda.
+ * - `TextInput` de React Native: Entrada de texto (https://reactnative.dev/docs/textinput).
+ *
+ * Estado interno:
+ * - `busqueda`: Guarda el texto ingresado en el campo de búsqueda.
+ *
+ * @component
+ * @example
+ * <InputBusqueda />
+ */
 
 const InputBusqueda = () => {
   const { setFiltroBusqueda } = usePacientes();

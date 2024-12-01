@@ -3,11 +3,32 @@ import { View, Text, TouchableOpacity, Alert } from "react-native";
 import { useSpeechToText } from "@/context/SpeechToTextContext";
 import DropDownArrow from "./DropDownArrow";
 import { Transcripcion } from "@/types/types";
-import CustomPressable from "../common/CustomPressable";
 
 type Props = {
   transcripcion: Transcripcion;
 };
+
+/**
+* # FilaTranscripciones
+* ## Descripción:
+* Este componente muestra la información de una transcripción de audio. Permite visualizar el estado de la transcripción y obtener el texto si está disponible. También incluye la opción de eliminar la transcripción.
+* 
+* ## Propiedades:
+* - transcripcion: Objeto de tipo Transcripcion que contiene los datos de la transcripción.
+* 
+* ## Lógica:
+* 
+* Se usa el hook useSpeechToText para interactuar con la API de transcripción (obtener y eliminar transcripciones).
+* Muestra el estado de la transcripción (por ejemplo, "queued", "processing", "completed").
+* El texto de la transcripción se obtiene al presionar un botón que activa la función obtenerTranscripcionAPI.
+* 
+* ## Funciones:
+* 
+* handleEliminar: Elimina la transcripción después de mostrar una alerta de confirmación.
+* handleGetTranscripcion: Obtiene el texto de la transcripción desde la API.
+* getColorByStatus: Retorna un color según el estado de la transcripción.
+
+ */
 
 const FilaTranscripciones = ({ transcripcion }: Props) => {
   const { eliminarTranscripcion, obtenerTranscripcionAPI } = useSpeechToText();

@@ -15,7 +15,20 @@ import { router } from "expo-router";
 type Props = {
   audio: { uri: string; name: string };
 };
-
+/**
+ * Componente que maneja la reproducción, pausa, reinicio y eliminación de un archivo de audio.
+ *
+ * Este componente recibe un objeto de audio con su URI y nombre. Permite al usuario reproducir, pausar,
+ * reiniciar y eliminar el audio, así como iniciar un proceso de transcripción utilizando `SpeechToTextContext`.
+ * Muestra un indicador de carga mientras se procesan las acciones de audio.
+ *
+ * @param {Object} props - Propiedades del componente.
+ * @param {Object} props.audio - El objeto de audio que contiene la URI y el nombre.
+ * @param {string} props.audio.uri - La URI del archivo de audio.
+ * @param {string} props.audio.name - El nombre del archivo de audio.
+ *
+ * @returns {React.JSX.Element} La fila de audio con botones para controlar el audio y opciones de transcripción y eliminación.
+ */
 const FilaAudio = ({ audio }: Props) => {
   const { subirAudio, cargando, error } = useSpeechToText();
 
@@ -109,7 +122,7 @@ const FilaAudio = ({ audio }: Props) => {
             onPress: async () => {
               try {
                 await subirAudio(audio.uri);
-                router.push("/(home)/paciente/transcripciones")
+                router.push("/(home)/paciente/transcripciones");
               } catch (e) {
                 Alert.alert("Error", error || "Algo salió mal.");
               }

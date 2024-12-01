@@ -22,7 +22,6 @@ const index = () => {
     <SafeAreaView>
       <Text className="text-xl text-center my-5">Transcripciones</Text>
       <ListaTranscripciones />
-      {/* <ProbarAudio/> */}
     </SafeAreaView>
   );
 };

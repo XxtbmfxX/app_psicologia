@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  View,
   Text,
   TextInput,
   TouchableOpacity,
@@ -15,6 +14,22 @@ interface LoginFormData {
   password: string;
 }
 
+/**
+ *
+ * Componente LoginForm
+ * # Descripción:
+ * Formulario de inicio de sesión. Permite a los usuarios ingresar su correo electrónico y contraseña para autenticarse. El componente maneja el estado de carga y muestra mensajes de error si los datos ingresados no son válidos.
+ *
+ * ## Funcionalidades:
+ * - Permite al usuario ingresar su correo electrónico y contraseña.
+ * - Valida que el correo tenga un formato correcto y que la contraseña tenga al menos 6 caracteres.
+ * - Muestra un mensaje de error si la autenticación falla.
+ * Muestra un indicador de carga mientras se realiza el proceso de inicio de sesión.
+ * ## Estados:
+ * - loading: Indica si el proceso de inicio de sesión está en curso.
+ * - error: Muestra el error de autenticación si lo hay.
+ *
+ */
 const LoginForm: React.FC = () => {
   const {
     control,

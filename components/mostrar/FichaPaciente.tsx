@@ -7,7 +7,20 @@ import { usePacientes } from "@/context/PacienteContext";
 type Props = {
   paciente: Paciente;
 };
-
+/**
+ * Componente que muestra los detalles de un paciente, incluyendo nombre, apellido, RUT, teléfono,
+ * y botones para ver grabaciones, transcripciones, archivar o modificar los datos del paciente.
+ *
+ * @param {Props} props - Propiedades del componente.
+ * @param {Paciente} props.paciente - Datos del paciente que se mostrarán en la ficha.
+ *
+ * @returns {JSX.Element} - Un componente con los detalles del paciente y acciones disponibles.
+ *
+ * @throws {Error} - Si hay un problema al archivar o modificar los datos del paciente, se muestra un mensaje de alerta.
+ *
+ * @example
+ * <FichaPaciente paciente={pacienteData} />
+ */
 const FichaPaciente = ({ paciente }: Props) => {
   const { archivarPaciente } = usePacientes();
 

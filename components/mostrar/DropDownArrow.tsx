@@ -6,7 +6,21 @@ interface DropdownArrowProps {
   title: string;
   children: React.ReactNode;
 }
-
+/**
+ * Componente que representa un dropdown con un título y contenido plegable.
+ * Muestra una flecha que indica si el dropdown está abierto o cerrado.
+ *
+ * @param {DropdownArrowProps} props - Propiedades del componente.
+ * @param {string} props.title - Título que aparece en el encabezado del dropdown.
+ * @param {React.ReactNode} props.children - Contenido que se mostrará al abrir el dropdown.
+ * 
+ * @returns {JSX.Element} - Un componente que muestra un dropdown animado.
+ *
+ * @example
+ * <DropdownArrow title="Opciones">
+ *   <Text>Contenido desplegado</Text>
+ * </DropdownArrow>
+ */
 const DropdownArrow: React.FC<DropdownArrowProps> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [animation] = useState(new Animated.Value(0));

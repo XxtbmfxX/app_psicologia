@@ -1,14 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Text,
-  TextInput,
-  Button,
-  View,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { Text, TextInput, View, Alert, ActivityIndicator } from "react-native";
 import { useForm, Controller } from "react-hook-form";
-import { styled } from "nativewind";
 import { validateRut } from "@fdograph/rut-utilities";
 import { usePacientes } from "@/context/PacienteContext"; // Contexto para manejar datos de pacientes
 import { router } from "expo-router";
@@ -20,6 +12,25 @@ type FormData = {
   apellido: string;
   rut: string;
 };
+
+/**
+ *
+ *
+ * Componente FormIngresoPaciente
+ * Descripción:
+ * Formulario para ingresar o editar los datos de un paciente, incluyendo su nombre, teléfono, apellido y RUT. Si se proporciona un id, se cargan los datos del paciente para su edición; si no, se trata de la creación de un nuevo paciente.
+ *
+ * @props id?: (opcional) ID del paciente a editar. Si no se proporciona, se asume que se está creando un nuevo paciente.
+ * ## Funcionalidades:
+ * - Permite al usuario ingresar o editar los datos del paciente.
+ * - Valida que todos los campos sean correctos antes de enviar el formulario.
+ * - Si id está presente, actualiza los datos del paciente; si no, crea un nuevo paciente.
+ * Muestra un mensaje de éxito al guardar los cambios.
+ * ## Estados:
+ * - loading: Indica si se están cargando los datos del paciente.
+ * @example
+ * <FormIngresoPaciente id="123" />
+ */
 
 const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
   const {
@@ -76,7 +87,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
-            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
+            style={{ backgroundColor: "white" }} // Agregar fondo blanco
             placeholder="Nombre"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -101,7 +112,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
-            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
+            style={{ backgroundColor: "white" }} // Agregar fondo blanco
             placeholder="Apellido"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -127,7 +138,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
-            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
+            style={{ backgroundColor: "white" }} // Agregar fondo blanco
             placeholder="Teléfono"
             onBlur={onBlur}
             onChangeText={onChange}
@@ -152,7 +163,7 @@ const FormIngresoPaciente = ({ id }: { id?: string | null }) => {
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
             className="border p-2 mb-4 w-full"
-            style={{ backgroundColor: 'white' }} // Agregar fondo blanco
+            style={{ backgroundColor: "white" }} // Agregar fondo blanco
             placeholder="RUT"
             onBlur={onBlur}
             onChangeText={onChange}

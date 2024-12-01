@@ -3,6 +3,22 @@ import { useAudioContext } from "@/context/AudioContext";
 import FilaAudio from "./FilaAudio";
 import { FlatList, Text, View } from "react-native";
 
+/**
+ * # ListaAudios
+ * ## Descripción:
+ * Este componente muestra una lista de audios filtrados por el nombre de un paciente. Utiliza el contexto de AudioContext para obtener la lista de audios disponibles y filtra aquellos que corresponden al paciente especificado.
+ *
+ * ## Propiedades:
+ *
+ * - nombrePaciente: Nombre del paciente a filtrar los audios (opcional, por defecto es "pedro").
+ *
+ * ## Lógica:
+ *
+ * - Usa el hook useAudioContext para acceder a la lista de audios (audioFiles).
+ * - Filtra los audios que comienzan con el nombre del paciente (por ejemplo, "pedro_").
+ * - Si no hay audios filtrados, muestra un mensaje indicando que no hay audios disponibles para el paciente.
+ * - Si hay audios, utiliza un FlatList para renderizar una lista de componentes FilaAudio.
+ */
 const ListaAudios = ({
   nombrePaciente = "pedro",
 }: {
