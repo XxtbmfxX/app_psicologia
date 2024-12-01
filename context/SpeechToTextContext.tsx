@@ -1,3 +1,8 @@
+/**
+ * | Context que maneja el la conección a la API de AssemblyAI
+ *
+ */
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Transcripcion } from "@/types/types";
 import axios from "axios";
@@ -21,6 +26,11 @@ const SpeechToTextContext = createContext<SpeechToTextContextType | undefined>(
   undefined
 );
 
+/**
+ * Hook para retornar el contexto de Speech To Text
+ *
+ * @returns SpeechToTextContextType()
+ */
 export const useSpeechToText = () => {
   const context = useContext(SpeechToTextContext);
   if (!context) {
@@ -31,6 +41,15 @@ export const useSpeechToText = () => {
   return context;
 };
 
+/**
+ * El provider de Speech To Text
+ * Contiene los estados y funciones necesarias para manejar la petición a la API
+ * de AssemblyAI
+ * - Debe abarcar el layout que contenga la aplicación
+ * @param children  React.ReactNode
+ * @return Void
+ */
+
 export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -38,7 +57,9 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Cargar todas las transcripciones desde la API
+  /**
+   * Cargar todas las transcripciones desde la API
+   *  */
   const cargarTranscripciones = async () => {
     console.log("cargando...");
 
@@ -49,7 +70,11 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
     console.log("cargado");
   };
 
-  // Obtener una transcripción por ID desde la API
+  /**
+   * Carga las transcripciones desde la API
+   * @param id: string
+   * @returns Promise<string | null>
+   */
   const obtenerTranscripcionAPI = async (
     id: string
   ): Promise<string | null> => {
@@ -76,10 +101,23 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  /**
+   * Agrega la transcripción al estado local
+   * @param transcripcion: Transcripcion
+   */
   const agregarTranscripcion = (transcripcion: Transcripcion) => {
     setTranscripciones((prev) => [...prev, transcripcion]);
   };
 
+  /**
+   * Se encarga de actualizar el estado de la transcripción
+   * - Processing
+   * - Queued
+   * - Copleted
+   *
+   * @param id: string
+   * @param estado: string
+   */
   const actualizarEstadoTranscripcion = (id: string, estado: string) => {
     setTranscripciones((prev) =>
       prev.map((t) => (t.id === id ? { ...t, status: estado } : t))
@@ -119,6 +157,12 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
     }, 5000); // Intervalo de 5 segundos
   };
 
+  /**
+   * Permite validar que el audio sea del formato correcto
+   * - Formatos validados "mp3", "wav", "m4a".
+   * @param audioFileUri: string
+   * @returns: boolean
+   */
   const validarAudio = (audioFileUri: string): boolean => {
     const extension = audioFileUri.split(".").pop()?.toLowerCase();
     const formatosPermitidos = ["mp3", "wav", "m4a"];
@@ -130,7 +174,9 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
     return true;
   };
 
-  // Subir un archivo de audio para transcribir
+  /**
+   * Subir un archivo de audio a la API para transcribir
+   *  */
   const subirAudio = async (audioFileUri: string) => {
     if (!validarAudio(audioFileUri)) return;
     try {
@@ -182,7 +228,11 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  // Eliminar una transcripción por ID desde la API
+  /**
+   * Eliminar una transcripción por ID desde la API
+   * @param id: string
+   * @returns Promise<void>
+   * */
   const eliminarTranscripcion = async (id: string) => {
     console.log(id);
     const res = await axios.delete(`${API_BASE_URL}/transcript/${id}`, {
@@ -191,11 +241,6 @@ export const SpeechToTextProvider: React.FC<{ children: React.ReactNode }> = ({
     console.log(res.data.status);
 
     setTranscripciones((prev) => prev.filter((t) => t.id !== id));
-  };
-
-  // Obtener una transcripción del estado local
-  const obtenerTranscripcion = (id: string): Transcripcion | undefined => {
-    return transcripciones.find((t) => t.id === id);
   };
 
   useEffect(() => {

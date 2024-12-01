@@ -1,16 +1,14 @@
 import React, { useState } from "react";
 import { TextInput, View } from "react-native";
 import { usePacientes } from "@/context/PacienteContext";
-import { Ionicons } from "@expo/vector-icons";
 
 const InputBusqueda = () => {
-  const { setFiltroBusqueda } = usePacientes(); // Nueva función desde el contexto
+  const { setFiltroBusqueda } = usePacientes();
   const [busqueda, setBusqueda] = useState("");
-  const [isFocused, setIsFocused] = useState(false);
 
   const manejarCambio = (texto: string) => {
     setBusqueda(texto);
-    setFiltroBusqueda(texto); // Actualiza el filtro en el contexto
+    setFiltroBusqueda(texto);
   };
 
   return (
@@ -21,8 +19,6 @@ const InputBusqueda = () => {
         placeholderTextColor="#888"
         value={busqueda}
         onChangeText={manejarCambio}
-        onFocus={() => setIsFocused(true)}
-        onBlur={() => setIsFocused(false)}
       />
     </View>
   );

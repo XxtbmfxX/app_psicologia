@@ -1,9 +1,26 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { Text } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { usePacientes } from "@/context/PacienteContext";
 import FichaPaciente from "@/components/mostrar/FichaPaciente";
 import { SafeAreaView } from "react-native-safe-area-context";
+/**
+ * Componente `PacienteDetails`.
+ *
+ * Función principal:
+ * - Muestra los detalles de un paciente utilizando el ID obtenido desde las rutas.
+ * - Si no se encuentra el paciente, muestra un mensaje indicando el error.
+ *
+ * Dependencias externas:
+ * - `useLocalSearchParams` de `expo-router` para obtener los parámetros de la URL.
+ * - `usePacientes` de `PacienteContext` para acceder a la lista de pacientes.
+ * - `SafeAreaView` para manejar las áreas seguras (ver: https://github.com/th3rdwave/react-native-safe-area-context).
+ * - `FichaPaciente` para mostrar los detalles del paciente (componente reutilizable).
+ *
+ * @component
+ * @returns {JSX.Element} Detalles de un paciente o un mensaje de error.
+ *
+ */
 
 const PacienteDetails = () => {
   const { pacientes } = usePacientes();

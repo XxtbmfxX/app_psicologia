@@ -10,7 +10,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
-    "storybook-generate": "sb-rn-get-stories"
+    "storybook-generate": "sb-rn-get-stories",
+    "docsMD": "typedoc --plugin typedoc-plugin-markdown --out ./docsMD"
   },
   "jest": {
     "preset": "jest-expo"
@@ -76,6 +77,8 @@
     "prettier": "^3.3.3",
     "react-native-svg": "15.8.0",
     "react-test-renderer": "18.2.0",
+    "typedoc": "^0.27.2",
+    "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "~5.3.3"
   },
   "private": true

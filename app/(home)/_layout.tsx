@@ -9,6 +9,12 @@ import { PacientesProvider } from "@/context/PacienteContext";
 import { CitasProvider } from "@/context/CitasContext";
 import { SpeechToTextProvider } from "@/context/SpeechToTextContext";
 
+
+/**
+ * Componente que contiene los providers necesarios para el funcionamiento de la aplicación
+ * además de estructurar las rutas usando Tabs
+ * @returns React.JSX.Element
+ */
 export default function HomeLayout() {
   const { user, loading } = useSession();
 

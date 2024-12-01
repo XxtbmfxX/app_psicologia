@@ -2,7 +2,9 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Href, Link, LinkProps } from "expo-router";
 
+
 type Props = {
+  //@ts-ignore
   ruta: Href<any>;
   titulo: string;
 };

@@ -1,0 +1,8 @@
+{
+    "entryPoints": ["app/**", "components/**", "context/**", "types/**"],
+    "out": "docs",
+    // "exclude": ["src/components/**"], // Excluye componentes de UI
+    "includeVersion": true,
+    "hideGenerator": true
+  }
+  

@@ -5,7 +5,10 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import ListaPacientes from "@/components/mostrar/ListaPacientes";
 import InputBusqueda from "@/components/InputBusqueda";
 import AntDesign from "@expo/vector-icons/AntDesign";
-
+/**
+ * Componente que presenta la pantalla principal de la aplicación
+ * @returns React.JSX.Element
+ */
 export default function Index() {
   return (
     <SafeAreaView className="flex-1 items-center p-2 bg-blue-400">

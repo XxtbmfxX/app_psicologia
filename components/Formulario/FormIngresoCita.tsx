@@ -49,11 +49,13 @@ const FormIngresoCita = ({ citaId }: Props) => {
     }
   }, [pacienteId, pacientes]);
 
+  {/* @ts-ignore */}
   const onChange = (e, selectedDate) => {
     setShow(false);
     if (selectedDate) setDate(selectedDate);
   };
 
+  {/* @ts-ignore */}
   const showMode = (currentMode) => setShow(true) || setMode(currentMode);
   const showDatepicker = () => showMode("date");
   const showTimepicker = () => showMode("time");
@@ -69,6 +71,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
       idPaciente: pacienteId,
       nombre: pacienteNombre,
       apellido: pacienteApellido,
+      // @ts-ignore
       fechaYHora: date,
       ...(citaId ? { id: citaId } : {}), // Añadir ID si es edición
     };
@@ -125,6 +128,7 @@ const FormIngresoCita = ({ citaId }: Props) => {
         <DateTimePicker
           testID="dateTimePicker"
           value={date}
+          //@ts-ignore
           mode={mode}
           is24Hour={true}
           onChange={onChange}
