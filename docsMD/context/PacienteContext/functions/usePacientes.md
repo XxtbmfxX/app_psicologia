@@ -6,12 +6,20 @@
 
 # Function: usePacientes()
 
-> **usePacientes**(): `PacientesContextType`
+> **usePacientes**(): [`PacientesContextType`](../../../types/types/type-aliases/PacientesContextType.md)
+
+Hook personalizado para acceder al contexto de pacientes.
 
 ## Returns
 
-`PacientesContextType`
+[`PacientesContextType`](../../../types/types/type-aliases/PacientesContextType.md)
+
+El contexto con la lógica y datos de pacientes.
+
+## Throws
+
+Si se usa fuera de un `PacientesProvider`.
 
 ## Defined in
 
-[context/PacienteContext.tsx:39](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/PacienteContext.tsx#L39)
+[context/PacienteContext.tsx:39](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/PacienteContext.tsx#L39)

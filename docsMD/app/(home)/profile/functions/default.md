@@ -8,10 +8,14 @@
 
 > **default**(): `Element`
 
+Componente que contiene el perfil de usuario
+
 ## Returns
 
 `Element`
 
+React.JSX.Element
+
 ## Defined in
 
-[app/(home)/profile.tsx:5](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/app/(home)/profile.tsx#L5)
+[app/(home)/profile.tsx:8](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/app/(home)/profile.tsx#L8)

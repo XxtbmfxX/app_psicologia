@@ -8,6 +8,11 @@
 
 > **default**(`props`, `deprecatedLegacyContext`?): `ReactNode`
 
+Componente principal de bienvenida de la aplicación.
+
+Este componente muestra un mensaje de bienvenida y un enlace para redirigir al usuario
+hacia la pantalla de login.
+
 ## Parameters
 
 ### props
@@ -26,6 +31,10 @@
 
 `ReactNode`
 
+La interfaz de bienvenida con un mensaje y un enlace.
+
+## Component
+
 ## Defined in
 
-[app/index.tsx:6](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/app/index.tsx#L6)
+[app/index.tsx:14](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/app/index.tsx#L14)

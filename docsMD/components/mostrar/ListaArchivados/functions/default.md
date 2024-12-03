@@ -6,13 +6,17 @@
 
 # Function: default()
 
-> **default**(`props`): `Element`
+> **default**(): `Element`
 
-## Parameters
+# ListaArchivados
+## Descripción:
+Este componente lista todos los pacientes archivados en un formato de lista usando FlatList. Si no hay pacientes archivados, muestra un mensaje indicando que no hay datos.
 
-### props
+# Lógica:
 
-`Props`
+- Usa el hook usePacientes para obtener la lista de pacientes archivados.
+- Si la lista está vacía, muestra un mensaje indicando que no hay pacientes archivados.
+- Si hay pacientes archivados, usa un FlatList para renderizar una lista de componentes FilaArchivado.
 
 ## Returns
 
@@ -20,4 +24,4 @@
 
 ## Defined in
 
-[components/mostrar/ListaArchivados.tsx:9](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/components/mostrar/ListaArchivados.tsx#L9)
+[components/mostrar/ListaArchivados.tsx:20](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/components/mostrar/ListaArchivados.tsx#L20)

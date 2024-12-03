@@ -6,18 +6,25 @@
 
 # Function: default()
 
-> **default**(`props`): `Element`
+> **default**(): `Element`
 
-## Parameters
+Componente `index`.
 
-### props
+Función principal:
+- Muestra una lista de transcripciones disponibles en la aplicación.
 
-`Props`
+Dependencias externas:
+- `ListaTranscripciones`: Componente reutilizable para listar transcripciones.
+- `SafeAreaView`: Contenedor que respeta las áreas seguras (ver: https://github.com/th3rdwave/react-native-safe-area-context).
 
 ## Returns
 
 `Element`
 
+Interfaz con un título y la lista de transcripciones.
+
+## Component
+
 ## Defined in
 
-[app/(home)/paciente/transcripciones/index.tsx:9](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/app/(home)/paciente/transcripciones/index.tsx#L9)
+[app/(home)/paciente/transcripciones/index.tsx:20](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/app/(home)/paciente/transcripciones/index.tsx#L20)

@@ -8,10 +8,15 @@
 
 > **default**(): `Element`
 
+Componente que contiene los providers necesarios para el funcionamiento de la aplicación
+además de estructurar las rutas usando Tabs
+
 ## Returns
 
 `Element`
 
+React.JSX.Element
+
 ## Defined in
 
-[app/(home)/\_layout.tsx:12](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/app/(home)/_layout.tsx#L12)
+[app/(home)/\_layout.tsx:18](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/app/(home)/_layout.tsx#L18)

@@ -8,6 +8,11 @@
 
 > **PacientesProvider**(`props`, `deprecatedLegacyContext`?): `ReactNode`
 
+Proveedor del contexto de pacientes.
+
+Administra los estados, funciones y la lógica relacionada con los pacientes
+y pacientes archivados. Proporciona acceso global a esta información y funcionalidad.
+
 ## Parameters
 
 ### props
@@ -32,4 +37,4 @@
 
 ## Defined in
 
-[context/PacienteContext.tsx:49](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/PacienteContext.tsx#L49)
+[context/PacienteContext.tsx:57](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/PacienteContext.tsx#L57)

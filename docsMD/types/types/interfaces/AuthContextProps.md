@@ -14,7 +14,7 @@
 
 #### Defined in
 
-[types/types.d.ts:8](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/types/types.d.ts#L8)
+[types/types.d.ts:8](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/types/types.d.ts#L8)
 
 ***
 
@@ -24,7 +24,7 @@
 
 #### Defined in
 
-[types/types.d.ts:9](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/types/types.d.ts#L9)
+[types/types.d.ts:9](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/types/types.d.ts#L9)
 
 ***
 
@@ -48,7 +48,7 @@
 
 #### Defined in
 
-[types/types.d.ts:6](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/types/types.d.ts#L6)
+[types/types.d.ts:6](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/types/types.d.ts#L6)
 
 ***
 
@@ -62,7 +62,7 @@
 
 #### Defined in
 
-[types/types.d.ts:7](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/types/types.d.ts#L7)
+[types/types.d.ts:7](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/types/types.d.ts#L7)
 
 ***
 
@@ -72,4 +72,4 @@
 
 #### Defined in
 
-[types/types.d.ts:5](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/types/types.d.ts#L5)
+[types/types.d.ts:5](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/types/types.d.ts#L5)

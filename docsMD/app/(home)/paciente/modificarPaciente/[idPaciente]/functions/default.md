@@ -6,18 +6,25 @@
 
 # Function: default()
 
-> **default**(`props`): `Element`
+> **default**(): `Element`
 
-## Parameters
+Componente `idPaciente`.
 
-### props
+Función principal:
+- Renderiza un formulario de ingreso de datos para un paciente específico, utilizando su ID obtenido desde los parámetros de la URL.
 
-`Props`
+Dependencias externas:
+- `useLocalSearchParams` de `expo-router` para capturar el ID del paciente desde la URL.
+- `FormIngresoPaciente`: Componente reutilizable que representa el formulario de ingreso de datos de un paciente.
 
 ## Returns
 
 `Element`
 
+Formulario de ingreso de datos para un paciente.
+
+## Component
+
 ## Defined in
 
-[app/(home)/paciente/modificarPaciente/\[idPaciente\].tsx:9](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/app/(home)/paciente/modificarPaciente/[idPaciente].tsx#L9)
+[app/(home)/paciente/modificarPaciente/\[idPaciente\].tsx:20](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/app/(home)/paciente/modificarPaciente/[idPaciente].tsx#L20)

@@ -8,6 +8,9 @@
 
 > **Cita**: `object`
 
+El modelo de datos de las citas
+- En caso de cambiar la etructura de datos es necesario cambiar este typo primero
+
 ## Type declaration
 
 ### apellido
@@ -32,4 +35,4 @@
 
 ## Defined in
 
-[types/types.d.ts:20](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/types/types.d.ts#L20)
+[types/types.d.ts:40](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/types/types.d.ts#L40)

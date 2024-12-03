@@ -8,6 +8,8 @@
 
 > **AudioFile**: `object`
 
+Representa un archivo de audio.
+
 ## Type declaration
 
 ### name
@@ -20,4 +22,4 @@
 
 ## Defined in
 
-[context/AudioContext.tsx:9](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/AudioContext.tsx#L9)
+[context/AudioContext.tsx:18](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/AudioContext.tsx#L18)

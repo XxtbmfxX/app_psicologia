@@ -6,13 +6,20 @@
 
 # Function: SessionProvider()
 
-> **SessionProvider**(`__namedParameters`): `Element`
+> **SessionProvider**(`children`): `Element`
+
+Proveedor del contexto de autenticación.
+
+Este componente se encarga de manejar el estado del usuario,
+las funciones para iniciar/cerrar sesión, y la navegación asociada.
 
 ## Parameters
 
-### \_\_namedParameters
+### children
 
-#### __namedParameters.children
+Componentes hijos que tendrán acceso al contexto.
+
+#### children.children
 
 `ReactNode`
 
@@ -22,4 +29,4 @@
 
 ## Defined in
 
-[context/AuthContext.tsx:30](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/AuthContext.tsx#L30)
+[context/AuthContext.tsx:52](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/AuthContext.tsx#L52)

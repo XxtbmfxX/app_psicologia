@@ -6,18 +6,26 @@
 
 # Function: default()
 
-> **default**(`props`): `Element`
+> **default**(): `Element`
 
-## Parameters
+Ruta: `/citas/modificarCita/[idCita]`
 
-### props
+Función principal:
+- Renderiza un formulario para modificar una cita específica.
 
-`Props`
+Dependencias externas:
+- `useLocalSearchParams`: Hook de `expo-router` para capturar el ID de la cita desde la URL.
+- `FormIngresoCita`: Componente reutilizable que representa el formulario para modificar datos de una cita, aceptando el ID como prop.
+- `SafeAreaView`: Contenedor seguro para respetar áreas protegidas.
 
 ## Returns
 
 `Element`
 
+Interfaz para modificar una cita específica.
+
+## Component
+
 ## Defined in
 
-[app/(home)/citas/modificarCita/\[idCita\].tsx:10](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/app/(home)/citas/modificarCita/[idCita].tsx#L10)
+[app/(home)/citas/modificarCita/\[idCita\].tsx:22](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/app/(home)/citas/modificarCita/[idCita].tsx#L22)

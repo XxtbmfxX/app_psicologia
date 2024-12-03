@@ -16,4 +16,5 @@
 
 - [Cita](type-aliases/Cita.md)
 - [Paciente](type-aliases/Paciente.md)
+- [PacientesContextType](type-aliases/PacientesContextType.md)
 - [Transcripcion](type-aliases/Transcripcion.md)

@@ -8,10 +8,20 @@
 
 > **useAudioContext**(): `AudioContextType`
 
+Hook personalizado para usar el contexto de audio.
+
+Este hook debe ser utilizado dentro de un componente que esté dentro de un `AudioProvider`.
+
 ## Returns
 
 `AudioContextType`
 
+Los valores y funciones del contexto de audio.
+
+## Throws
+
+Si el hook se usa fuera de un `AudioProvider`.
+
 ## Defined in
 
-[context/AudioContext.tsx:70](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/AudioContext.tsx#L70)
+[context/AudioContext.tsx:127](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/AudioContext.tsx#L127)

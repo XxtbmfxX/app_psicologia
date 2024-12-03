@@ -8,6 +8,11 @@
 
 > **AudioProvider**(`props`, `deprecatedLegacyContext`?): `ReactNode`
 
+Proveedor del contexto de audio.
+
+Este componente se encarga de inicializar y proporcionar las funciones y datos relacionados
+con el manejo de archivos de audio a sus hijos.
+
 ## Parameters
 
 ### props
@@ -32,4 +37,4 @@
 
 ## Defined in
 
-[context/AudioContext.tsx:23](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/AudioContext.tsx#L23)
+[context/AudioContext.tsx:51](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/AudioContext.tsx#L51)

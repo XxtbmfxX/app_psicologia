@@ -8,6 +8,11 @@
 
 > **CitasProvider**(`props`, `deprecatedLegacyContext`?): `ReactNode`
 
+Proveedor del contexto de citas.
+
+Este componente gestiona el estado y las operaciones relacionadas con las citas, como agregar,
+eliminar, actualizar, obtener y mover citas.
+
 ## Parameters
 
 ### props
@@ -32,4 +37,4 @@
 
 ## Defined in
 
-[context/CitasContext.tsx:36](https://github.com/XxtbmfxX/app_psicologia/blob/1b7e1a732f6dc51a16bb04e0db4a2462b477a368/context/CitasContext.tsx#L36)
+[context/CitasContext.tsx:65](https://github.com/XxtbmfxX/app_psicologia/blob/da762f4f9225edbb02c8e13dfe2f9bc7ae75eef5/context/CitasContext.tsx#L65)
